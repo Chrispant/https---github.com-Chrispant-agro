@@ -11,7 +11,7 @@ export async function loadPartial(id, file) {
   container.innerHTML = html;
 }
 
-loadPartial("header", "/partials/header.html");
-loadPartial("footer", "/partials/footer.html");
+loadPartial("header", "partials/header.html");
+loadPartial("footer", "partials/footer.html");
 initCTA();
 loadPosts();
