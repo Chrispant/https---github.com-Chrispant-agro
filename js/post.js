@@ -1,4 +1,4 @@
-import { loadPartials } from "./main.js"; // we’ll export it
+import { loadPartials } from "js/main.js"; // we’ll export it
 async function fetchPost(slug) {
   const res = await fetch("data/posts.json");
   const posts = await res.json();

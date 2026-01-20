@@ -2,7 +2,7 @@ export async function loadPosts() {
   const list = document.getElementById("posts");
   if (!list) return;
 
-  const response = await fetch("/data/posts.json");
+  const response = await fetch("data/posts.json");
   const posts = await response.json();
 
 list.innerHTML = posts
