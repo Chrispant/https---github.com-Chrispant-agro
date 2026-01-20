@@ -1,4 +1,4 @@
-import { loadPartial } from "./main.js"; // we’ll export it
+import { loadPartials } from "./main.js"; // we’ll export it
 async function fetchPost(slug) {
   const res = await fetch("/data/posts.json");
   const posts = await res.json();
@@ -6,8 +6,8 @@ async function fetchPost(slug) {
 }
 
 // Load header/footer
-loadPartial("header", "/partials/header.html");
-loadPartial("footer", "/partials/footer.html");
+loadPartials();
+
 
 // Read the slug from the URL
 const params = new URLSearchParams(window.location.search);
