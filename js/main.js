@@ -12,7 +12,7 @@ export async function loadPartials() {
 }
 
 async function loadLatestPosts() {
-  const res = await fetch("posts.json");
+  const res = await fetch("data/posts.json");
   const posts = await res.json();
 
   const latest = posts.slice(0, 3);
