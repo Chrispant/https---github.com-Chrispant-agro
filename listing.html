@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Listing</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="page-layout">
+    <div id="siteHeader"></div>
+
+      <main class="page-content">
+        <div class="container">
+
+          <nav id="breadcrumbs" class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="index.html">Home</a>
+            <span class="crumb-sep">/</span>
+            <a id="crumbListings" href="listings.html">Listings</a>
+            <span class="crumb-sep">/</span>
+            <span id="crumbCurrent" class="crumb-current">Listing</span>
+          </nav>
+          <a id="backToResults" class="back-link" href="listings.html">← Back to results</a>
+
+          <section class="listing-page">
+            <div id="listingError" class="listing-error" style="display:none;"></div>
+
+            <div class="listing-top">
+              <div class="listing-gallery">
+                <img id="listingImage" alt="" />
+              </div>
+
+              <div class="listing-summary">
+                <h1 id="listingTitle"></h1>
+
+                <div class="listing-badges">
+                  <span class="badge" id="listingRegion"></span>
+                  <span class="badge" id="listingHarvest"></span>
+                </div>
+
+                <div class="listing-facts">
+                  <div class="fact"><span>Quantity</span><strong id="listingQty"></strong></div>
+                  <div class="fact"><span>Price</span><strong id="listingPrice"></strong></div>
+                  <div class="fact"><span>Listed</span><strong id="listingDate"></strong></div>
+                </div>
+
+                <div class="seller-box">
+                  <div class="seller-title">Seller</div>
+                  <div class="seller-name" id="sellerName"></div>
+
+                  <div class="seller-actions">
+                    <a id="sellerCall" class="btn primary" href="#">Call</a>
+                    <a id="sellerEmail" class="btn secondary" href="#">Email</a>
+                  </div>
+
+                  <div class="seller-note">
+                    Contact the farmer directly to discuss availability, timing, and pricing.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <section class="listing-details">
+              <h2>Details</h2>
+              <p id="listingDescription"></p>
+            </section>
+          </section>
+        </div>
+    </main>
+
+    <div id="siteFooter"></div>
+
+    <script type="module" src="js/layout.js"></script>
+    <script type="module" src="js/listing.js"></script>
+
+  </body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin • Agro.gr</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="page-layout">
+    <div id="siteHeader"></div>
+
+    <main class="page-content">
+      <div class="container">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <span class="crumb-sep">/</span>
+          <span class="crumb-current">Admin</span>
+        </nav>
+
+        <div class="admin-layout">
+          <!-- LEFT: form -->
+          <section class="admin-panel">
+            <div class="admin-panel-head">
+              <h1 class="admin-title">Admin</h1>
+              <div class="admin-subtitle">Create & manage listings locally (export JSON).</div>
+            </div>
+
+            <div class="admin-actions">
+              <button id="downloadJson" class="empty-btn primary" type="button">
+                Download listings.json
+              </button>
+
+              <button id="copyCurrent" class="empty-btn" type="button">
+                Copy current listing JSON
+              </button>
+
+              <label class="empty-btn" style="display:inline-flex; gap:8px; align-items:center; cursor:pointer;">
+                Import JSON
+                <input id="importJson" type="file" accept="application/json" style="display:none;" />
+              </label>
+            </div>
+
+            <div id="adminMsg" class="admin-msg" style="display:none;"></div>
+
+            <form id="listingForm" class="admin-form">
+              <div class="admin-grid">
+                <div class="form-group">
+                  <label for="id">ID</label>
+                  <input id="id" placeholder="auto-generated if empty" />
+                </div>
+
+                <div class="form-group">
+                  <label for="createdAt">Created At (YYYY-MM-DD)</label>
+                  <input id="createdAt" placeholder="e.g. 2026-01-28" />
+                </div>
+
+                <div class="form-group">
+                  <label for="cropType">Crop Type *</label>
+                  <input id="cropType" placeholder="e.g. Potatoes" required />
+                </div>
+
+                <div class="form-group">
+                  <label for="region">Region *</label>
+                  <input id="region" placeholder="e.g. Central Macedonia" required />
+                </div>
+
+                <div class="form-group">
+                  <label for="quantityTons">Quantity (tons) *</label>
+                  <input id="quantityTons" type="number" step="0.01" placeholder="e.g. 35" required />
+                </div>
+
+                <div class="form-group">
+                  <label for="pricePerKg">Price (€ / kg)</label>
+                  <input id="pricePerKg" type="number" step="0.01" placeholder="e.g. 0.45" />
+                </div>
+
+                <div class="form-group">
+                  <label for="priceNote">Price Note</label>
+                  <input id="priceNote" placeholder="e.g. Upon agreement" />
+                </div>
+                
+                <div class="form-group">
+                  <label for="image">Image</label>
+
+                  <div class="admin-image-row">
+                    <input id="image" placeholder="images/listings/potatoes.jpg" />
+                    <label class="empty-btn" style="display:inline-flex; gap:8px; align-items:center; cursor:pointer;">
+                      Choose
+                      <input id="imageFile" type="file" accept="image/*" style="display:none;" />
+                    </label>
+                  </div>
+
+                  <label class="admin-check">
+                    <input id="embedImage" type="checkbox" />
+                    Embed image into JSON (no need to copy file)
+                  </label>
+
+                  <div class="admin-hint">
+                    If embed is OFF: copy the chosen file into <code>images/listings/</code>.
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="harvestStart">Harvest Start (YYYY-MM)</label>
+                  <input id="harvestStart" placeholder="e.g. 2026-03" />
+                </div>
+
+                <div class="form-group">
+                  <label for="harvestEnd">Harvest End (YYYY-MM)</label>
+                  <input id="harvestEnd" placeholder="e.g. 2026-04" />
+                </div>
+
+                <div class="form-group">
+                  <label for="sellerName">Seller Name *</label>
+                  <input id="sellerName" placeholder="e.g. Giorgos Nikolaou" required />
+                </div>
+
+                <div class="form-group">
+                  <label for="sellerPhone">Seller Phone</label>
+                  <input id="sellerPhone" placeholder="+30..." />
+                </div>
+
+                <div class="form-group">
+                  <label for="sellerEmail">Seller Email</label>
+                  <input id="sellerEmail" placeholder="name@example.com" />
+                </div>
+
+                <div class="form-group admin-span-2">
+                  <label for="description">Description</label>
+                  <input id="description" placeholder="Short description shown on listing page." />
+                </div>
+              </div>
+
+              <div class="admin-form-actions">
+                <button id="saveBtn" class="search-button" type="submit">Save listing</button>
+                <button id="resetForm" class="reset-button" type="button">Clear form</button>
+                <button id="deleteBtn" class="reset-button danger hidden" type="button">Delete listing</button>
+              </div>
+
+              <div class="admin-help">
+                <strong>Tip:</strong> Put images in <code>images/listings/</code> and use paths like
+                <code>images/listings/cabbage.jpg</code>.
+              </div>
+            </form>
+
+            <div class="admin-preview">
+              <div class="admin-preview-title">Preview</div>
+              <div id="previewSlot"></div>
+            </div>
+          </section>
+
+          <!-- RIGHT: list -->
+          <section class="admin-panel">
+            <div class="admin-panel-head">
+              <h2 class="admin-title" style="font-size:18px;">Listings</h2>
+              <div class="admin-subtitle"><span id="adminCount">0</span> total</div>
+            </div>
+
+            <div class="admin-list-toolbar">
+              <input id="searchAdmin" class="admin-search" placeholder="Search by crop / region / seller..." />
+              <button id="newBtn" class="empty-btn" type="button">New</button>
+            </div>
+
+            <div id="adminTable" class="admin-table"></div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <div id="siteFooter"></div>
+
+    <script type="module" src="js/layout.js"></script>
+    <script type="module" src="js/admin.js"></script>
+  </body>
+</html>

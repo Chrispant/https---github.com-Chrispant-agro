@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Listings</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="page-layout">
+    <div id="siteHeader"></div>
+    <main class="page-content">
+      <div class="container listings-layout">
+        <!-- LEFT: filters -->
+        <aside class="filters-sidebar">
+          <h2 class="filters-title">Filters</h2>
+
+          <form id="searchForm" class="filters-form">
+            <div class="form-group">
+              <label for="cropType">Crop Type</label>
+              <select id="cropType">
+                <option value="">All crops</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="region">Region</label>
+              <select id="region">
+                <option value="">All regions</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Quantity (tons)</label>
+              <div class="range-group">
+                <input type="number" id="minQuantity" placeholder="Min" />
+                <input type="number" id="maxQuantity" placeholder="Max" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="harvestMonth">Harvest Period</label>
+              <input type="month" id="harvestMonth" />
+            </div>
+
+            <div class="form-group">
+              <label>Price (€ / kg)</label>
+              <div class="range-group">
+                <input type="number" step="0.01" id="minPrice" placeholder="Min" />
+                <input type="number" step="0.01" id="maxPrice" placeholder="Max" />
+              </div>
+            </div>
+
+            <div class="form-group full-width">
+              <button type="submit" class="search-button">Update Results</button>
+            </div>
+
+            <div class="form-group full-width">
+              <button
+                id="resetFilters"
+                type="button"
+                class="reset-button hidden"
+              >
+                Reset filters
+              </button>
+            </div>
+
+          </form>
+        </aside>
+
+        <!-- CENTER: results -->
+
+
+        <section class="results-area">
+          <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="index.html">Home</a>
+            <span class="crumb-sep">/</span>
+            <span class="crumb-current">Listings</span>
+          </nav>
+          <div class="results-bar">
+            <div>
+              <h1 class="results-title">Listings</h1>
+              <div id="resultsCount"></div>
+              <div id="activeFilters" class="active-filters"></div>
+            </div>
+
+            <label class="sort">
+              Sort:
+              <select id="sortBy">
+                <option value="newest">Newest</option>
+                <option value="qtyDesc">Quantity (high → low)</option>
+                <option value="qtyAsc">Quantity (low → high)</option>
+                <option value="priceAsc">Price (low → high)</option>
+                <option value="priceDesc">Price (high → low)</option>
+              </select>
+            </label>
+          </div>
+
+        <div id="listingsContainer" class="listings-grid"></div>
+
+        <div class="pagination-bar">
+          <button id="prevPage" class="page-btn" type="button">← Previous</button>
+
+          <div id="pageNumbers" class="page-numbers"></div>
+
+          <button id="nextPage" class="page-btn" type="button">Next →</button>
+        </div>
+        
+      </section>
+     </div>
+    </main>
+
+    <div id="siteFooter"></div>
+
+    <script type="module" src="js/layout.js"></script>
+    <script type="module" src="js/search.js"></script>
+  </body>
+</html>
