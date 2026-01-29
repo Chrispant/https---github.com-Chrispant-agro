@@ -284,7 +284,7 @@ function renderListings(items) {
     .map((l) => {
       const title = `${l.cropType} • ${l.region}`;
       const harvest = `${l.harvestStart ?? "?"} → ${l.harvestEnd ?? "?"}`;
-      const qty = l.quantityTons !== undefined ? `${l.quantityTons} tons` : "—";
+      const qty = l.quantityTons !== undefined ? `${l.quantityTons} τόνοι` : "—";
       const price = formatPrice(l);
 
       return `
@@ -292,7 +292,7 @@ function renderListings(items) {
           <a class="listing-link" href="listing.html?id=${encodeURIComponent(l.id)}&return=${encodeURIComponent(returnUrl)}">
             <div class="listing-image">
               <img
-                src="${escapeHtml(l.image || "images/listings/placeholder.jpg")}"
+                src="${escapeHtml(l.image || "images/listings/placeholder.webp")}"
                 alt="${escapeHtml(l.cropType || "Listing")}"
                 loading="lazy"
               >
@@ -414,7 +414,7 @@ function applyFilters() {
     if (selectedCrop && l.cropType !== selectedCrop) return false;
     if (selectedRegion && l.region !== selectedRegion) return false;
 
-    // Quantity (tons)
+    // Quantity (τόνοι)
     if (minQty !== null && Number(l.quantityTons) < minQty) return false;
     if (maxQty !== null && Number(l.quantityTons) > maxQty) return false;
 

@@ -62,7 +62,7 @@ function renderGallery(images) {
   if (!img) return;
 
   const safe = Array.isArray(images) ? images.filter(Boolean) : [];
-  const cover = safe[0] || "images/listings/placeholder.jpg";
+  const cover = safe[0] || "images/listings/placeholder.webp";
   img.src = cover;
   img.alt = "Listing image";
 
