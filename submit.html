@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <title>Υποβολή Αγγελίας • Agro.gr</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="page-layout">
+  <div id="siteHeader"></div>
+
+  <main class="page-content">
+    <div class="container" style="max-width:720px;">
+
+      <nav class="breadcrumbs">
+        <a href="index.html">Home</a>
+        <span class="crumb-sep">/</span>
+        <span class="crumb-current">Υποβολή Αγγελίας</span>
+      </nav>
+
+      <section class="panel" style="padding:24px;">
+        <h1 style="margin-top:0;">Υποβολή Αγγελίας</h1>
+        <p style="color:#555;">
+          Δημοσίευσε το προϊόν σου δωρεάν και έλα σε άμεση επαφή με αγοραστές.
+        </p>
+
+        <form id="submitForm">
+
+          <!-- 1. PRODUCT -->
+          <h3>1️⃣ Προϊόν</h3>
+
+        <!-- Καλλιέργεια -->
+        <div class="form-group">
+        <label>Καλλιέργεια *</label>
+        <input id="cropType" name="cropType" placeholder="π.χ. Πατάτες" required />
+        <div class="field-error" id="err-cropType"></div>
+        </div>
+
+        <!-- Περιοχή -->
+        <div class="form-group">
+        <label>Περιοχή *</label>
+        <input id="region" name="region" placeholder="π.χ. Κεντρική Μακεδονία" required />
+        <div class="field-error" id="err-region"></div>
+        </div>
+
+        <!-- Ποσότητα -->
+        <div class="form-group">
+        <label>Ποσότητα (τόνοι) *</label>
+        <input id="quantityTons" name="quantityTons" type="number" step="0.01" placeholder="π.χ. 25" required />
+        <div class="field-error" id="err-quantityTons"></div>
+        </div>
+
+        <!-- Τιμή -->
+        <div class="form-group">
+        <label>Τιμή (€ / kg)</label>
+        <input id="pricePerKg" name="pricePerKg" type="number" step="0.01" placeholder="π.χ. 0.45" />
+        <div style="font-size:13px;color:#777;margin-top:4px;">
+              Αφήστε κενό αν είναι κατόπιν συμφωνίας
+        </div>
+        <div class="field-error" id="err-pricePerKg"></div>
+        </div>
+
+        <!-- 3. Εικόνες -->
+        <h3 style="margin-top:28px;">3️⃣ Φωτογραφίες</h3>
+
+        <div class="form-group">
+        <label>Φωτογραφίες προϊόντος</label>
+        <input id="images" name="images[]" type="file" accept="image/*" multiple />
+        <div id="imagePreview" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;"></div>
+        </div>
+
+        <!-- Όνομα -->
+        <div class="form-group">
+        <label>Όνομα *</label>
+        <input id="sellerName" name="sellerName" placeholder="π.χ. Γιώργος Παπαδόπουλος" required />
+        <div class="field-error" id="err-sellerName"></div>
+        </div>
+
+        <!-- Τηλέφωνο -->
+        <div class="form-group">
+        <label>Τηλέφωνο</label>
+        <input id="sellerPhone" name="sellerPhone" placeholder="+30..." />
+        <div class="field-error" id="err-sellerPhone"></div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+        <label>Email</label>
+        <input id="sellerEmail" name="sellerEmail" type="email" placeholder="example@email.gr" />
+        <div class="field-error" id="err-sellerEmail"></div>
+        </div>
+
+ 
+
+
+          <!-- Δημοσίευση -->
+          <div style="margin-top:28px;">
+            <button class="search-button" type="submit" style="width:100%;font-size:16px;">
+              ✅ Δημοσίευση αγγελίας
+            </button>
+            <div id="formStatus" style="margin-top:10px;color:#555;"></div>
+          </div>
+
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <div id="siteFooter"></div>
+
+  <script type="module" src="js/layout.js"></script>
+  <script type="module" src="js/submit.js"></script>
+</body>
+</html>

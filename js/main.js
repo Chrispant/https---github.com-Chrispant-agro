@@ -488,7 +488,7 @@ function writeFiltersToURL() {
 
 // ---------- Data loading ----------
 async function loadListings() {
-  const res = await fetch("data/listings.json");
+  const res = await fetch("api/listings.php");
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   listings = await res.json();
 }
@@ -622,7 +622,7 @@ if (resetBtn) {
   } catch (err) {
     console.error("Failed to init listings page:", err);
     els.container.innerHTML =
-      "<p>Could not load listings. Make sure your server is running and data/listings.json exists.</p>";
+      "<p>Could not load listings. Make sure your server is running.</p>";
   }
 
  
