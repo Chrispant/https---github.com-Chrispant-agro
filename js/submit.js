@@ -1,3 +1,5 @@
+const cropSelect = document.getElementById("cropType");
+const regionSelect = document.getElementById("region");
 const form = document.getElementById("submitForm");
 const statusEl = document.getElementById("formStatus");
 const imagesInput = document.getElementById("images");
@@ -12,6 +14,68 @@ const fields = {
   sellerPhone: document.getElementById("sellerPhone"),
   sellerEmail: document.getElementById("sellerEmail"),
 };
+
+async function loadCrops() {
+  if (!cropSelect) return;
+
+  cropSelect.innerHTML = `<option value="">— Επιλέξτε καλλιέργεια —</option>`;
+
+  try {
+    const res = await fetch("data/crops.json", { cache: "no-store" });
+    const data = await res.json();
+
+    if (!data || !Array.isArray(data.groups)) return;
+
+    for (const g of data.groups) {
+      const og = document.createElement("optgroup");
+      og.label = g.group;
+
+      for (const item of g.items) {
+        const value = item.value?.trim();
+        if (!value) continue;
+
+        const opt = document.createElement("option");
+        opt.value = value;
+        opt.textContent = value;
+        og.appendChild(opt);
+      }
+
+      cropSelect.appendChild(og);
+    }
+  } catch (e) {
+    cropSelect.innerHTML = `<option value="">Σφάλμα φόρτωσης</option>`;
+  }
+}
+
+async function loadRegions() {
+  if (!regionSelect) return;
+
+  try {
+    const res = await fetch("api/regions.php", { cache: "no-store" });
+    const data = await res.json().catch(() => null);
+
+    if (!res.ok || !data || data.ok !== true || !Array.isArray(data.regions)) {
+      regionSelect.innerHTML = `<option value="">Αποτυχία φόρτωσης</option>`;
+      return;
+    }
+
+    regionSelect.innerHTML = `<option value="">— Επιλέξτε περιοχή —</option>`;
+
+    for (const r of data.regions) {
+      const value = (r.value ?? r.name ?? "").toString().trim();
+      const label = (r.label ?? r.name ?? r.value ?? "").toString().trim();
+      if (!value) continue;
+
+      const opt = document.createElement("option");
+      opt.value = value;
+      opt.textContent = label || value;
+      regionSelect.appendChild(opt);
+    }
+  } catch (e) {
+    regionSelect.innerHTML = `<option value="">Σφάλμα δικτύου</option>`;
+  }
+}
+
 
 function setStatus(msg, isError = false) {
   if (!statusEl) return;
@@ -179,4 +243,9 @@ form?.addEventListener("submit", async (e) => {
   } catch (err) {
     setStatus("Σφάλμα δικτύου. Δοκίμασε ξανά.", true);
   }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadCrops();
+  loadRegions();
 });

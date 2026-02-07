@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "updatedAt": "2026-02-08",
+  "groups": [
+    {
+      "groupValue": "north",
+      "groupLabel": "Βόρεια Ελλάδα",
+      "items": [
+        { "value": "thraki", "label": "Θράκη" },
+        { "value": "makedonia", "label": "Μακεδονία" },
+        { "value": "ipeiros", "label": "Ήπειρος" },
+        { "value": "thessalia", "label": "Θεσσαλία" }
+      ]
+    },
+    {
+      "groupValue": "central",
+      "groupLabel": "Κεντρική Ελλάδα",
+      "items": [
+        { "value": "sterea-ellada", "label": "Στερεά Ελλάδα" },
+        { "value": "attiki", "label": "Αττική" }
+      ]
+    },
+    {
+      "groupValue": "south-islands",
+      "groupLabel": "Νότια Ελλάδα & Νησιά",
+      "items": [
+        { "value": "peloponnisos", "label": "Πελοπόννησος" },
+        { "value": "krites", "label": "Κρήτη" },
+        { "value": "aigaio", "label": "Νησιά Αιγαίου" },
+        { "value": "ionio", "label": "Ιόνια Νησιά" }
+      ]
+    }
+  ]
+}

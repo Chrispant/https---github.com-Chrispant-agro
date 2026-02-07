@@ -49,9 +49,10 @@
                   <div class="seller-title">Seller</div>
                   <div class="seller-name" id="sellerName"></div>
 
-                  <div class="seller-actions">
+                    <div class="seller-actions">
                     <a id="sellerCall" class="btn primary" href="#">Call</a>
                     <a id="sellerEmail" class="btn secondary" href="#">Email</a>
+                    <button id="reportOpenBtn" class="icon-flag-btn" type="button" title="Αναφορά αγγελίας" aria-label="Αναφορά αγγελίας">🚩</button>
                   </div>
 
                   <div class="seller-note">
@@ -69,7 +70,47 @@
         </div>
     </main>
 
+       <div id="reportModal" class="modal-backdrop" aria-hidden="true">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="reportTitle">
+    <div class="modal-head">
+      <h3 id="reportTitle" style="margin:0;">🚩 Αναφορά αγγελίας</h3>
+      <button id="reportCloseBtn" class="modal-x" type="button" aria-label="Κλείσιμο">✕</button>
+    </div>
+
+    <p style="margin:10px 0; color:#555;">
+      Περιέγραψε τι συνέβη (π.χ. ζήτησε OTP, έστειλε link πληρωμής, ψεύτικο courier, πίεση για προκαταβολή).
+    </p>
+
+    <form id="reportForm">
+      <input type="hidden" id="reportListingId" value="">
+
+      <div class="form-group">
+        <label>Όνομα (προαιρετικό)</label>
+        <input id="reporterName" type="text" placeholder="π.χ. Γιώργος">
+      </div>
+
+      <div class="form-group">
+        <label>Email/Τηλέφωνο (προαιρετικό)</label>
+        <input id="reporterContact" type="text" placeholder="+30... ή email">
+      </div>
+
+      <div class="form-group">
+        <label>Τι συνέβη; *</label>
+        <textarea id="reportDescription" rows="4" required placeholder="Γράψε λίγα λόγια..."></textarea>
+      </div>
+
+      <div style="display:flex; gap:10px; align-items:center; margin-top:12px;">
+        <button class="search-button" type="submit">Υποβολή</button>
+        <div id="reportStatus" style="color:#555;"></div>
+      </div>
+    </form>
+  </div>
+</div>
+
     <div id="siteFooter"></div>
+
+ 
+
 
     <script type="module" src="js/layout.js"></script>
     <script type="module" src="js/listing.js"></script>

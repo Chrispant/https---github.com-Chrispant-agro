@@ -37,6 +37,122 @@ function formatPrice(l) {
   if (Number.isNaN(n)) return "Price not specified";
   return `€${n.toFixed(2)} / kg`;
 }
+ //helpers 
+function openModal(modal) {
+  if (!modal) return;
+  modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal(modal) {
+  if (!modal) return;
+  modal.classList.remove("is-open");
+  modal.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
+
+function setReportStatus(msg, isError = false) {
+  const el = document.getElementById("reportStatus");
+  if (!el) return;
+  el.textContent = msg || "";
+  el.style.color = isError ? "crimson" : "#555";
+}
+
+function getIdFromUrl() {
+  try {
+    const params = new URLSearchParams(window.location.search || "");
+    const id = params.get("id");
+    return id ? String(id).trim() : "";
+  } catch (e) {
+    return "";
+  }
+}
+
+
+function initReportModal() {
+  const modal = document.getElementById("reportModal");
+  const openBtn = document.getElementById("reportOpenBtn");
+  const closeBtn = document.getElementById("reportCloseBtn");
+  const form = document.getElementById("reportForm");
+
+  const listingIdEl = document.getElementById("reportListingId");
+  const nameEl = document.getElementById("reporterName");
+  const contactEl = document.getElementById("reporterContact");
+  const descEl = document.getElementById("reportDescription");
+
+ 
+
+
+  if (!modal || !openBtn || !closeBtn || !form) return;
+
+  // put current listing id into hidden input
+  const id = getIdFromUrl();
+  if (!id) {
+    showNotFound("Λείπει το id στο URL.");
+    return;
+  }
+  if (listingIdEl) listingIdEl.value = id || "";
+
+  openBtn.addEventListener("click", () => {
+    setReportStatus("");
+    openModal(modal);
+    setTimeout(() => descEl?.focus(), 50);
+  });
+
+  closeBtn.addEventListener("click", () => closeModal(modal));
+
+  // click outside closes
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeModal(modal);
+  });
+
+  // ESC closes
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeModal(modal);
+  });
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    setReportStatus("Αποστολή…");
+
+    const payload = {
+      listingId: (listingIdEl?.value || "").trim(),
+      name: (nameEl?.value || "").trim(),
+      contact: (contactEl?.value || "").trim(),
+      description: (descEl?.value || "").trim(),
+    };
+
+    if (!payload.listingId || !payload.description) {
+      setReportStatus("Γράψε μια σύντομη περιγραφή.", true);
+      return;
+    }
+
+    try {
+      const res = await fetch("api/report.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json().catch(() => null);
+
+      if (!res.ok || !data || !data.ok) {
+        setReportStatus(data?.error || "Σφάλμα αποστολής.", true);
+        return;
+      }
+
+      setReportStatus("✅ Η αναφορά καταχωρήθηκε. Ευχαριστούμε!");
+      form.reset();
+      // κρατάμε ξανά το listing id
+      if (listingIdEl) listingIdEl.value = id || "";
+      setTimeout(() => closeModal(modal), 800);
+    } catch (err) {
+      setReportStatus("Σφάλμα δικτύου. Δοκίμασε ξανά.", true);
+    }
+  });
+}
+
 
 function ensureThumbsContainer() {
   // Adds a simple thumbnails row under the main image if not already present
@@ -170,4 +286,7 @@ async function loadListing() {
   }
 }
 
-loadListing();
+document.addEventListener("DOMContentLoaded", () => {
+  loadListing();      // αν το έχεις έτσι ήδη
+  initReportModal();  // 👈 πρόσθεσε αυτό
+});

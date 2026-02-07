@@ -32,17 +32,22 @@
 
         <!-- Καλλιέργεια -->
         <div class="form-group">
-        <label>Καλλιέργεια *</label>
-        <input id="cropType" name="cropType" placeholder="π.χ. Πατάτες" required />
-        <div class="field-error" id="err-cropType"></div>
+          <label>Καλλιέργεια</label>
+          <select id="cropType" name="cropType" required>
+            <option value="">Φόρτωση…</option>
+          </select>
+          <div class="field-error" id="err-cropType"></div>
         </div>
 
         <!-- Περιοχή -->
         <div class="form-group">
-        <label>Περιοχή *</label>
-        <input id="region" name="region" placeholder="π.χ. Κεντρική Μακεδονία" required />
-        <div class="field-error" id="err-region"></div>
+          <label>Περιοχή *</label>
+          <select id="region" name="region" required>
+            <option value="">Φόρτωση…</option>
+          </select>
+          <div class="field-error" id="err-region"></div>
         </div>
+
 
         <!-- Ποσότητα -->
         <div class="form-group">

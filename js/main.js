@@ -299,6 +299,10 @@ function renderListings(items) {
             </div>
 
             <div class="listing-body">
+              <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+                <span class="badge">🌿 ${escapeHtml(l.cropType || "Καλλιέργεια")}</span>
+                <span class="badge badge-muted">📍 ${escapeHtml(l.region || "Περιοχή")}</span>
+              </div>
               <h3 class="listing-title">${escapeHtml(title)}</h3>
 
               <div class="listing-meta">

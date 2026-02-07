@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "updatedAt": "2026-02-08",
+  "groups": [
+    {
+      "groupValue": "vegetables",
+      "groupLabel": "Λαχανικά",
+      "items": [
+        { "value": "tomates", "label": "Ντομάτες" },
+        { "value": "patates", "label": "Πατάτες" },
+        { "value": "kremmydia", "label": "Κρεμμύδια" },
+        { "value": "lachana", "label": "Λάχανα" },
+        { "value": "agouria", "label": "Αγγούρια" },
+        { "value": "piperies", "label": "Πιπεριές" },
+        { "value": "karota", "label": "Καρότα" },
+        { "value": "salates", "label": "Σαλάτες / Μαρούλια" }
+      ]
+    },
+    {
+      "groupValue": "fruits",
+      "groupLabel": "Φρούτα",
+      "items": [
+        { "value": "mila", "label": "Μήλα" },
+        { "value": "portokalia", "label": "Πορτοκάλια" },
+        { "value": "rodakina", "label": "Ροδάκινα" },
+        { "value": "stafyli", "label": "Σταφύλια" },
+        { "value": "kerasia", "label": "Κεράσια" },
+        { "value": "akridia", "label": "Ακτινίδια" }
+      ]
+    },
+    {
+      "groupValue": "grains-legumes",
+      "groupLabel": "Δημητριακά & Όσπρια",
+      "items": [
+        { "value": "sitari", "label": "Σιτάρι" },
+        { "value": "krithari", "label": "Κριθάρι" },
+        { "value": "kalamaki", "label": "Καλαμπόκι" },
+        { "value": "ryzi", "label": "Ρύζι" },
+        { "value": "fasolia", "label": "Φασόλια" },
+        { "value": "fakes", "label": "Φακές" }
+      ]
+    },
+    {
+      "groupValue": "olive-oil",
+      "groupLabel": "Ελιές & Ελαιόλαδο",
+      "items": [
+        { "value": "elies", "label": "Ελιές" },
+        { "value": "elaiolado", "label": "Ελαιόλαδο" }
+      ]
+    },
+    {
+      "groupValue": "nuts",
+      "groupLabel": "Ξηροί καρποί",
+      "items": [
+        { "value": "amygdala", "label": "Αμύγδαλα" },
+        { "value": "karidia", "label": "Καρύδια" },
+        { "value": "fystikia", "label": "Φιστίκια" }
+      ]
+    }
+  ]
+}
