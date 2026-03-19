@@ -14,7 +14,7 @@ if ($id === "") {
 // Try by public_id first
 $stmt = $pdo->prepare("
   SELECT
-    id, public_id, crop_type, region, quantity_tons, price_per_kg, price_note,
+    id, public_id, crop_type, variety, region, quantity_tons, price_per_kg, price_note,
     harvest_start, harvest_end, seller_name, seller_phone, seller_email,
     description, created_at
   FROM listings
@@ -28,7 +28,7 @@ $r = $stmt->fetch();
 if (!$r && ctype_digit($id)) {
   $stmt2 = $pdo->prepare("
     SELECT
-      id, public_id, crop_type, region, quantity_tons, price_per_kg, price_note,
+      id, public_id, crop_type, variety, region, quantity_tons, price_per_kg, price_note,
       harvest_start, harvest_end, seller_name, seller_phone, seller_email,
       description, created_at
     FROM listings
@@ -61,13 +61,14 @@ echo json_encode([
   "listing" => [
     "id" => $r["public_id"],
     "cropType" => $r["crop_type"],
+    "variety" => $r["variety"],
     "region" => $r["region"],
     "quantityTons" => (float)$r["quantity_tons"],
     "pricePerKg" => $r["price_per_kg"] === null ? null : (float)$r["price_per_kg"],
     "priceNote" => $r["price_note"],
     "harvestStart" => $r["harvest_start"],
     "harvestEnd" => $r["harvest_end"],
-    "image" => $images[0] ?? "images/listings/placeholder.jpg",
+    "image" => $images[0] ?? "images/listings/placeholder.webp",
     "images" => $images,
     "seller" => [
       "name" => $r["seller_name"],

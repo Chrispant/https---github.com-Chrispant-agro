@@ -14,7 +14,7 @@
     <div class="container" style="max-width:720px;">
 
       <nav class="breadcrumbs">
-        <a href="index.html">Home</a>
+        <a href="index.html">Αρχική</a>
         <span class="crumb-sep">/</span>
         <span class="crumb-current">Υποβολή Αγγελίας</span>
       </nav>
@@ -28,22 +28,54 @@
         <form id="submitForm">
 
           <!-- 1. PRODUCT -->
-          <h3>1️⃣ Προϊόν</h3>
+          <h3>🟢 Προϊόν</h3>
 
-        <!-- Καλλιέργεια -->
+          <!-- Καλλιέργεια -->
         <div class="form-group">
           <label>Καλλιέργεια</label>
-          <select id="cropType" name="cropType" required>
-            <option value="">Φόρτωση…</option>
-          </select>
+
+          <div class="crop-select" id="cropPicker">
+            <!-- Το πραγματικό submitted value -->
+            <input id="cropType" name="cropType" type="hidden" required />
+
+            <!-- Το κουμπί που μοιάζει με dropdown -->
+            <button type="button" id="cropPickerToggle" class="crop-select-toggle">
+              <span id="cropPickerLabel">— Επίλεξε καλλιέργεια —</span>
+              <span class="crop-select-arrow">▾</span>
+            </button>
+
+            <!-- Το ανοιχτό panel -->
+            <div id="cropPickerMenu" class="crop-select-menu">
+              <div class="crop-select-search-wrap">
+                <input
+                  id="cropSearch"
+                  type="text"
+                  class="crop-select-search"
+                  placeholder="🔎 Ποια καλλιέργεια ψάχνεις;"
+                  autocomplete="off"
+                />
+              </div>
+
+              <div id="cropDropdown" class="crop-select-options"></div>
+            </div>
+          </div>
+
           <div class="field-error" id="err-cropType"></div>
+        </div>
+
+        <!-- Ποικιλία (εμφανίζεται αν υπάρχει) -->
+        <div class="form-group" id="varietyGroup" style="display:none;">
+          <label>Ποικιλία (προαιρετικό)</label>
+          <select id="variety" name="variety">
+            <option value="">— Επιλέξτε ποικιλία —</option>
+          </select>
         </div>
 
         <!-- Περιοχή -->
         <div class="form-group">
           <label>Περιοχή *</label>
           <select id="region" name="region" required>
-            <option value="">Φόρτωση…</option>
+            <option value="">φόρτωση...</option>
           </select>
           <div class="field-error" id="err-region"></div>
         </div>
@@ -53,27 +85,90 @@
         <div class="form-group">
         <label>Ποσότητα (τόνοι) *</label>
         <input id="quantityTons" name="quantityTons" type="number" step="0.01" placeholder="π.χ. 25" required />
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+  <button type="button" class="chip" data-chip="qty" data-val="5">5 τόνοι</button>
+  <button type="button" class="chip" data-chip="qty" data-val="10">10 τόνοι</button>
+  <button type="button" class="chip" data-chip="qty" data-val="20">20 τόνοι</button>
+  <button type="button" class="chip" data-chip="qty" data-val="50">50 τόνοι</button>
+</div>
         <div class="field-error" id="err-quantityTons"></div>
         </div>
 
         <!-- Τιμή -->
         <div class="form-group">
-        <label>Τιμή (€ / kg)</label>
-        <input id="pricePerKg" name="pricePerKg" type="number" step="0.01" placeholder="π.χ. 0.45" />
-        <div style="font-size:13px;color:#777;margin-top:4px;">
-              Αφήστε κενό αν είναι κατόπιν συμφωνίας
+        <label>Τιμή (€ / kg) *</label>
+        <input id="pricePerKg" name="pricePerKg" type="number" step="0.01" placeholder="π.χ. 0.45" required />
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+  <button type="button" class="chip" data-chip="price" data-val="0.20">€0.20</button>
+  <button type="button" class="chip" data-chip="price" data-val="0.35">€0.35</button>
+  <button type="button" class="chip" data-chip="price" data-val="0.45">€0.45</button>
+  <button type="button" class="chip" data-chip="price" data-val="0.60">€0.60</button>
+</div>
+           <div class="field-error" id="err-pricePerKg"></div>
         </div>
-        <div class="field-error" id="err-pricePerKg"></div>
+
+
+        <!-- 2. Συγκομιδή -->
+
+      <div class="form-group">
+        <label>Περίοδος συγκομιδής *</label>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <select id="harvestStart" name="harvestStart" required style="min-width:160px;">
+            <option value="" disabled selected hidden>Από (μήνας)</option>
+          </select>
+
+          <select id="harvestEnd" name="harvestEnd" required style="min-width:160px;">
+            <option value="" disabled selected hidden>Έως (μήνας)</option>
+          </select>
         </div>
+        <div class="field-error" id="err-harvest"></div>
+    </div>
+
+
+            <!-- Περιγραφή -->
+        <div class="form-group">
+          <label>Περιγραφή</label>
+          <textarea
+            id="description"
+            name="description"
+            rows="5"
+            placeholder="Γράψε λίγες λεπτομέρειες για το προϊόν σου, π.χ. ποιότητα, ποικιλία, τρόπο συσκευασίας, διαθεσιμότητα, μεταφορά."
+          ></textarea>
+          <div class="hint">
+            Προαιρετικό, αλλά βοηθά πολύ τους αγοραστές να καταλάβουν καλύτερα την αγγελία.
+          </div>
+        </div>
+
 
         <!-- 3. Εικόνες -->
-        <h3 style="margin-top:28px;">3️⃣ Φωτογραφίες</h3>
+        <h3 style="margin-top:28px;">🟢 Φωτογραφίες</h3>
 
-        <div class="form-group">
-        <label>Φωτογραφίες προϊόντος</label>
-        <input id="images" name="images[]" type="file" accept="image/*" multiple />
-        <div id="imagePreview" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;"></div>
-        </div>
+
+    <div class="form-group">
+  <label>Φωτογραφίες προϊόντος</label>
+
+ <div id="imageDropzone"
+     style="border:2px dashed #cfd8dc;border-radius:12px;padding:14px;transition:150ms;background:#fafafa;">
+  
+ <input id="images" name="images[]" type="file" accept="image/*" multiple
+       style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" />
+
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+    <button type="button" id="browseImagesBtn"
+            style="border:1px solid #d7dde3;background:#fff;padding:8px 12px;border-radius:10px;cursor:pointer;">
+      📁 Επιλογή φωτογραφιών
+    </button>
+
+    <div style="font-size:13px;color:#777;">
+      Σύρε φωτογραφίες εδώ (max 6). Η πρώτη είναι cover.
+    </div>
+  </div>
+
+  <div id="imagePreview" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;"></div>
+</div>
+
+      <!-- 3. Εικόνες -->
+        <h3 style="margin-top:28px;">🟢 Στοιχεία Χρήστη</h3>
 
         <!-- Όνομα -->
         <div class="form-group">
@@ -84,7 +179,7 @@
 
         <!-- Τηλέφωνο -->
         <div class="form-group">
-        <label>Τηλέφωνο</label>
+        <label>Τηλέφωνο *</label>
         <input id="sellerPhone" name="sellerPhone" placeholder="+30..." />
         <div class="field-error" id="err-sellerPhone"></div>
         </div>
@@ -97,7 +192,12 @@
         </div>
 
  
+<h3 style="margin-top:28px;">👀 Προεπισκόπηση αγγελίας</h3>
+<p style="color:#555;margin-top:6px;">
+  Έτσι θα φαίνεται περίπου η αγγελία σου στη λίστα.
+</p>
 
+<div id="livePreview"></div>
 
           <!-- Δημοσίευση -->
           <div style="margin-top:28px;">

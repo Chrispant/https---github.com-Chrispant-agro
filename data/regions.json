@@ -1,33 +1,353 @@
 {
-  "version": 1,
-  "updatedAt": "2026-02-08",
+  "version": 3,
+  "updatedAt": "2026-03-14",
   "groups": [
     {
-      "groupValue": "north",
-      "groupLabel": "Βόρεια Ελλάδα",
+      "groupValue": "μακεδονία",
+      "groupLabel": "Μακεδονία",
       "items": [
-        { "value": "thraki", "label": "Θράκη" },
-        { "value": "makedonia", "label": "Μακεδονία" },
-        { "value": "ipeiros", "label": "Ήπειρος" },
-        { "value": "thessalia", "label": "Θεσσαλία" }
+        {
+          "value": "grevenon",
+          "label": "Ν. Γρεβενών"
+        },
+        {
+          "value": "dramas",
+          "label": "Ν. Δράμας"
+        },
+        {
+          "value": "imathias",
+          "label": "Ν. Ημαθίας"
+        },
+        {
+          "value": "thessalonikis",
+          "label": "Ν. Θεσσαλονίκης"
+        },
+        {
+          "value": "kastorias",
+          "label": "Ν. Καστοριάς"
+        },
+        {
+          "value": "kilkis",
+          "label": "Ν. Κιλκίς"
+        },
+        {
+          "value": "kozanis",
+          "label": "Ν. Κοζάνης"
+        },
+        {
+          "value": "pellas",
+          "label": "Ν. Πέλλας"
+        },
+        {
+          "value": "pierias",
+          "label": "Ν. Πιερίας"
+        },
+        {
+          "value": "serron",
+          "label": "Ν. Σερρών"
+        },
+        {
+          "value": "florinas",
+          "label": "Ν. Φλώρινας"
+        },
+        {
+          "value": "chalkidikis",
+          "label": "Ν. Χαλκιδικής"
+        }
       ]
     },
     {
-      "groupValue": "central",
-      "groupLabel": "Κεντρική Ελλάδα",
+      "groupValue": "θράκη",
+      "groupLabel": "Θράκη",
       "items": [
-        { "value": "sterea-ellada", "label": "Στερεά Ελλάδα" },
-        { "value": "attiki", "label": "Αττική" }
+        {
+          "value": "evrou",
+          "label": "Ν. Έβρου"
+        },
+        {
+          "value": "xanthis",
+          "label": "Ν. Ξάνθης"
+        },
+        {
+          "value": "rodopis",
+          "label": "Ν. Ροδόπης"
+        }
       ]
     },
     {
-      "groupValue": "south-islands",
-      "groupLabel": "Νότια Ελλάδα & Νησιά",
+      "groupValue": "ήπειρος",
+      "groupLabel": "Ήπειρος",
       "items": [
-        { "value": "peloponnisos", "label": "Πελοπόννησος" },
-        { "value": "krites", "label": "Κρήτη" },
-        { "value": "aigaio", "label": "Νησιά Αιγαίου" },
-        { "value": "ionio", "label": "Ιόνια Νησιά" }
+        {
+          "value": "artas",
+          "label": "Ν. Άρτας"
+        },
+        {
+          "value": "thesprotias",
+          "label": "Ν. Θεσπρωτίας"
+        },
+        {
+          "value": "ioanninon",
+          "label": "Ν. Ιωαννίνων"
+        },
+        {
+          "value": "prevezas",
+          "label": "Ν. Πρέβεζας"
+        }
+      ]
+    },
+    {
+      "groupValue": "θεσσαλία",
+      "groupLabel": "Θεσσαλία",
+      "items": [
+        {
+          "value": "karditsas",
+          "label": "Ν. Καρδίτσας"
+        },
+        {
+          "value": "larisas",
+          "label": "Ν. Λάρισας"
+        },
+        {
+          "value": "magnisias",
+          "label": "Ν. Μαγνησίας"
+        },
+        {
+          "value": "sporadon",
+          "label": "Ν. Σποράδων"
+        },
+        {
+          "value": "trikalon",
+          "label": "Ν. Τρικάλων"
+        }
+      ]
+    },
+    {
+      "groupValue": "στερεά-ελλάδα",
+      "groupLabel": "Στερεά Ελλάδα",
+      "items": [
+        {
+          "value": "aitoloakarnanias",
+          "label": "Ν. Αιτωλοακαρνανίας"
+        },
+        {
+          "value": "voiotias",
+          "label": "Ν. Βοιωτίας"
+        },
+        {
+          "value": "evrytanias",
+          "label": "Ν. Ευρυτανίας"
+        },
+        {
+          "value": "evias",
+          "label": "Ν. Εύβοιας"
+        },
+        {
+          "value": "fthiotidas",
+          "label": "Ν. Φθιώτιδας"
+        },
+        {
+          "value": "fokidas",
+          "label": "Ν. Φωκίδας"
+        }
+      ]
+    },
+    {
+      "groupValue": "πελοπόννησος",
+      "groupLabel": "Πελοπόννησος",
+      "items": [
+        {
+          "value": "argolidas",
+          "label": "Ν. Αργολίδας"
+        },
+        {
+          "value": "arkadias",
+          "label": "Ν. Αρκαδίας"
+        },
+        {
+          "value": "achaias",
+          "label": "Ν. Αχαΐας"
+        },
+        {
+          "value": "ileias",
+          "label": "Ν. Ηλείας"
+        },
+        {
+          "value": "korinthias",
+          "label": "Ν. Κορινθίας"
+        },
+        {
+          "value": "lakonias",
+          "label": "Ν. Λακωνίας"
+        },
+        {
+          "value": "messinias",
+          "label": "Ν. Μεσσηνίας"
+        }
+      ]
+    },
+    {
+      "groupValue": "αττική",
+      "groupLabel": "Αττική",
+      "items": [
+        {
+          "value": "attikis-anatolikis",
+          "label": "Ν. Ανατολικής Αττικής"
+        },
+        {
+          "value": "attikis-voreiou-tomea-athinon",
+          "label": "Ν. Βορείου Τομέα Αθηνών"
+        },
+        {
+          "value": "attikis-dytikis",
+          "label": "Ν. Δυτικής Αττικής"
+        },
+        {
+          "value": "attikis-dytikou-tomea-athinon",
+          "label": "Ν. Δυτικού Τομέα Αθηνών"
+        },
+        {
+          "value": "attikis-kentrikou-tomea-athinon",
+          "label": "Ν. Κεντρικού Τομέα Αθηνών"
+        },
+        {
+          "value": "nisoi-attikis",
+          "label": "Ν. Νήσων"
+        },
+        {
+          "value": "attikis-notiou-tomea-athinon",
+          "label": "Ν. Νοτίου Τομέα Αθηνών"
+        },
+        {
+          "value": "peiraios",
+          "label": "Ν. Πειραιώς"
+        }
+      ]
+    },
+    {
+      "groupValue": "κρήτη",
+      "groupLabel": "Κρήτη",
+      "items": [
+        {
+          "value": "irakleiou",
+          "label": "Ν. Ηρακλείου"
+        },
+        {
+          "value": "lasithiou",
+          "label": "Ν. Λασιθίου"
+        },
+        {
+          "value": "rethymnou",
+          "label": "Ν. Ρεθύμνου"
+        },
+        {
+          "value": "chanion",
+          "label": "Ν. Χανίων"
+        }
+      ]
+    },
+    {
+      "groupValue": "νησιά-αιγαίου",
+      "groupLabel": "Νησιά Αιγαίου",
+      "items": [
+        {
+          "value": "androu",
+          "label": "Ν. Άνδρου"
+        },
+        {
+          "value": "thiras",
+          "label": "Ν. Θήρας"
+        },
+        {
+          "value": "ikarias",
+          "label": "Ν. Ικαρίας"
+        },
+        {
+          "value": "kea-kythnou",
+          "label": "Ν. Κέας-Κύθνου"
+        },
+        {
+          "value": "kalymnou",
+          "label": "Ν. Καλύμνου"
+        },
+        {
+          "value": "karpathou-kasou",
+          "label": "Ν. Καρπάθου-Κάσου"
+        },
+        {
+          "value": "ko",
+          "label": "Ν. Κω"
+        },
+        {
+          "value": "lesvou",
+          "label": "Ν. Λέσβου"
+        },
+        {
+          "value": "limnou",
+          "label": "Ν. Λήμνου"
+        },
+        {
+          "value": "milos",
+          "label": "Ν. Μήλου"
+        },
+        {
+          "value": "mykonou",
+          "label": "Ν. Μυκόνου"
+        },
+        {
+          "value": "naxou",
+          "label": "Ν. Νάξου"
+        },
+        {
+          "value": "parou",
+          "label": "Ν. Πάρου"
+        },
+        {
+          "value": "rodou",
+          "label": "Ν. Ρόδου"
+        },
+        {
+          "value": "samou",
+          "label": "Ν. Σάμου"
+        },
+        {
+          "value": "syrou",
+          "label": "Ν. Σύρου"
+        },
+        {
+          "value": "tinou",
+          "label": "Ν. Τήνου"
+        },
+        {
+          "value": "chiou",
+          "label": "Ν. Χίου"
+        }
+      ]
+    },
+    {
+      "groupValue": "ιόνια-νησιά",
+      "groupLabel": "Ιόνια Νησιά",
+      "items": [
+        {
+          "value": "zakynthou",
+          "label": "Ν. Ζακύνθου"
+        },
+        {
+          "value": "ithakis",
+          "label": "Ν. Ιθάκης"
+        },
+        {
+          "value": "kerkyras",
+          "label": "Ν. Κέρκυρας"
+        },
+        {
+          "value": "kefallinias",
+          "label": "Ν. Κεφαλληνίας"
+        },
+        {
+          "value": "lefkadas",
+          "label": "Ν. Λευκάδας"
+        }
       ]
     }
   ]

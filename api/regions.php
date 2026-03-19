@@ -8,13 +8,27 @@ if (!file_exists($path)) {
   exit;
 }
 
-$json = file_get_contents($path);
-$data = json_decode($json, true);
+$data = json_decode(file_get_contents($path), true);
 
-if (!is_array($data) || !isset($data["regions"]) || !is_array($data["regions"])) {
+if (!is_array($data) || !isset($data["groups"]) || !is_array($data["groups"])) {
   http_response_code(500);
-  echo json_encode(["ok" => false, "error" => "Invalid regions.json"], JSON_UNESCAPED_UNICODE);
+  echo json_encode(["ok" => false, "error" => "Invalid regions.json format (expected groups)"], JSON_UNESCAPED_UNICODE);
   exit;
 }
 
-echo json_encode(["ok" => true, "regions" => $data["regions"]], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+$items = [];
+foreach ($data["groups"] as $g) {
+  if (!isset($g["items"]) || !is_array($g["items"])) continue;
+  foreach ($g["items"] as $it) {
+    if (!isset($it["value"])) continue;
+    $items[] = $it;
+  }
+}
+
+echo json_encode([
+  "ok" => true,
+  "version" => $data["version"] ?? null,
+  "updatedAt" => $data["updatedAt"] ?? null,
+  "groups" => $data["groups"],
+  "items" => $items
+], JSON_UNESCAPED_UNICODE);

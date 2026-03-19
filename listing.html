@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Listing</title>
+    <title>Αγγελία</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
 
@@ -17,11 +17,11 @@
           <nav id="breadcrumbs" class="breadcrumbs" aria-label="Breadcrumb">
             <a href="index.html">Home</a>
             <span class="crumb-sep">/</span>
-            <a id="crumbListings" href="listings.html">Listings</a>
+            <a id="crumbListings" href="listings.html">Αγγελίες</a>
             <span class="crumb-sep">/</span>
-            <span id="crumbCurrent" class="crumb-current">Listing</span>
+            <span id="crumbCurrent" class="crumb-current">Αγγελία</span>
           </nav>
-          <a id="backToResults" class="back-link" href="listings.html">← Back to results</a>
+          <a id="backToResults" class="back-link" href="listings.html">← Πίσω στα αποτελέσματα</a>
 
           <section class="listing-page">
             <div id="listingError" class="listing-error" style="display:none;"></div>
@@ -34,36 +34,41 @@
               <div class="listing-summary">
                 <h1 id="listingTitle"></h1>
 
+                <div id="listingVarietyRow" style="display:none;">
+                  <strong>Ποικιλία:</strong> <span id="listingVariety"></span>
+                </div>
+
                 <div class="listing-badges">
                   <span class="badge" id="listingRegion"></span>
                   <span class="badge" id="listingHarvest"></span>
                 </div>
 
+
                 <div class="listing-facts">
-                  <div class="fact"><span>Quantity</span><strong id="listingQty"></strong></div>
-                  <div class="fact"><span>Price</span><strong id="listingPrice"></strong></div>
-                  <div class="fact"><span>Listed</span><strong id="listingDate"></strong></div>
+                  <div class="fact"><span>Ποσότητα</span><strong id="listingQty"></strong></div>
+                  <div class="fact"><span>Τιμή</span><strong id="listingPrice"></strong></div>
+                  <div class="fact"><span>Ημερομινία αγγελίας</span><strong id="listingDate"></strong></div>
                 </div>
 
                 <div class="seller-box">
-                  <div class="seller-title">Seller</div>
+                  <div class="seller-title">Πωλητής</div>
                   <div class="seller-name" id="sellerName"></div>
 
                     <div class="seller-actions">
-                    <a id="sellerCall" class="btn primary" href="#">Call</a>
+                    <a id="sellerCall" class="btn primary" href="#">Τηλέφωνο</a>
                     <a id="sellerEmail" class="btn secondary" href="#">Email</a>
                     <button id="reportOpenBtn" class="icon-flag-btn" type="button" title="Αναφορά αγγελίας" aria-label="Αναφορά αγγελίας">🚩</button>
                   </div>
 
                   <div class="seller-note">
-                    Contact the farmer directly to discuss availability, timing, and pricing.
+                    Επικοινωνήστε απευθείας με τον πωλητή για λεπτομέρειες.
                   </div>
                 </div>
               </div>
             </div>
 
             <section class="listing-details">
-              <h2>Details</h2>
+              <h2>Περιγραφή</h2>
               <p id="listingDescription"></p>
             </section>
           </section>

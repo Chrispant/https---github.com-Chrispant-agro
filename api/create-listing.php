@@ -21,6 +21,7 @@ function make_public_id($crop, $region) {
 
 // ---- Read fields ----
 $cropType = trim($_POST["cropType"] ?? "");
+$variety = trim($_POST["variety"] ?? "");
 $region   = trim($_POST["region"] ?? "");
 $quantityTons = $_POST["quantityTons"] ?? "";
 $pricePerKg   = $_POST["pricePerKg"] ?? "";
@@ -34,6 +35,7 @@ $description  = trim($_POST["description"] ?? "");
 
 // ---- Validate minimal ----
 if ($cropType === "") bad("cropType is required");
+if ($variety === "") $variety = null;
 if ($region === "") bad("region is required");
 if ($sellerName === "") bad("sellerName is required");
 
@@ -97,17 +99,18 @@ try {
   $pdo->beginTransaction();
 
   $stmt = $pdo->prepare("
-    INSERT INTO listings
-      (public_id, crop_type, region, quantity_tons, price_per_kg, price_note,
-       harvest_start, harvest_end, seller_name, seller_phone, seller_email,
-       description, created_at)
-    VALUES
-      (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
+ INSERT INTO listings
+  (public_id, crop_type, variety, region, quantity_tons, price_per_kg, price_note,
+   harvest_start, harvest_end, seller_name, seller_phone, seller_email,
+   description, created_at)
+VALUES
+  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
   ");
 
   $stmt->execute([
     $publicId,
     $cropType,
+    $variety,
     $region,
     $quantityTons,
     $pricePerKgVal,
