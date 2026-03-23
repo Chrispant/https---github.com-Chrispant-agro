@@ -9,6 +9,7 @@ $listingsSql = "
     id,
     public_id,
     crop_type,
+    variety,
     region,
     quantity_tons,
     price_per_kg,
@@ -42,13 +43,14 @@ foreach ($listRows as $r) {
   $outById[$listingId] = [
     "id" => $r["public_id"],
     "cropType" => $r["crop_type"],
+    "variety" => $r["variety"],
     "region" => $r["region"],
     "quantityTons" => (float)$r["quantity_tons"],
     "pricePerKg" => $r["price_per_kg"] === null ? null : (float)$r["price_per_kg"],
     "priceNote" => $r["price_note"],
     "harvestStart" => $r["harvest_start"],
     "harvestEnd" => $r["harvest_end"],
-    "image" => "images/listings/placeholder.jpg", // will be replaced if images exist
+    "image" => "images/listings/placeholder.webp", // will be replaced if images exist
     "images" => [],
     "seller" => [
       "name" => $r["seller_name"],

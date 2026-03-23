@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Listings</title>
+    <title>Αγγελίες</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
 
@@ -13,25 +13,49 @@
       <div class="container listings-layout">
         <!-- LEFT: filters -->
         <aside class="filters-sidebar">
-          <h2 class="filters-title">Filters</h2>
+          <h2 class="filters-title">Φίλτρα</h2>
 
           <form id="searchForm" class="filters-form">
             <div class="form-group">
-              <label for="cropType">Crop Type</label>
-              <select id="cropType">
-                <option value="">All crops</option>
-              </select>
+              <label for="cropSearchInput">Καλλιέργεια</label>
+
+              <div class="crop-multi-select" id="cropMultiSelect">
+              <button type="button" class="crop-multi-toggle" id="cropSelectToggle">
+                <span id="cropSelectLabel">Όλες οι καλλιέργειες</span>
+                <span>▾</span>
+              </button>
+
+              <div class="crop-multi-menu" id="cropSelectMenu" hidden>
+                <div class="crop-multi-search-wrap">
+                  <input
+                    type="text"
+                    id="cropSearchInput"
+                    class="crop-multi-search"
+                    placeholder="Αναζήτηση καλλιέργειας..."
+                    autocomplete="off"
+                  />
+                </div>
+
+                <div class="crop-multi-actions">
+                  <button type="button" class="chip" id="cropSelectAllBtn">Όλες</button>
+                  <button type="button" class="chip" id="cropClearBtn">Καθαρισμός</button>
+                </div>
+
+                <div class="crop-multi-options" id="cropOptions"></div>
+           
+                </div>
+              </div>
             </div>
 
             <div class="form-group">
-              <label for="region">Region</label>
+              <label for="region">Περιοχή</label>
               <select id="region">
-                <option value="">All regions</option>
+                <option value="">Όλες οι περιοχές</option>
               </select>
             </div>
 
             <div class="form-group">
-              <label>Quantity (tons)</label>
+              <label>Ποσότητα (τόνοι)</label>
               <div class="range-group">
                 <input type="number" id="minQuantity" placeholder="Min" />
                 <input type="number" id="maxQuantity" placeholder="Max" />
@@ -39,12 +63,12 @@
             </div>
 
             <div class="form-group">
-              <label for="harvestMonth">Harvest Period</label>
+              <label for="harvestMonth">Συγκομιδή</label>
               <input type="month" id="harvestMonth" />
             </div>
 
             <div class="form-group">
-              <label>Price (€ / kg)</label>
+              <label>Τιμή (€ / kg)</label>
               <div class="range-group">
                 <input type="number" step="0.01" id="minPrice" placeholder="Min" />
                 <input type="number" step="0.01" id="maxPrice" placeholder="Max" />
@@ -52,7 +76,7 @@
             </div>
 
             <div class="form-group full-width">
-              <button type="submit" class="search-button">Update Results</button>
+              <button type="submit" class="search-button">Ανανέωση αποτελεσμάτων</button>
             </div>
 
             <div class="form-group full-width">
@@ -73,13 +97,13 @@
 
         <section class="results-area">
           <nav class="breadcrumbs" aria-label="Breadcrumb">
-            <a href="index.html">Home</a>
+            <a href="index.html">Αρχική</a>
             <span class="crumb-sep">/</span>
-            <span class="crumb-current">Listings</span>
+            <span class="crumb-current">Αγγελίες</span>
           </nav>
           <div class="results-bar">
             <div>
-              <h1 class="results-title">Listings</h1>
+              <h1 class="results-title">Αγγελίες</h1>
               <div id="resultsCount"></div>
               <div id="activeFilters" class="active-filters"></div>
             </div>
@@ -87,11 +111,11 @@
             <label class="sort">
               Sort:
               <select id="sortBy">
-                <option value="newest">Newest</option>
-                <option value="qtyDesc">Quantity (high → low)</option>
-                <option value="qtyAsc">Quantity (low → high)</option>
-                <option value="priceAsc">Price (low → high)</option>
-                <option value="priceDesc">Price (high → low)</option>
+                <option value="newest">Πιο πρόσφατες</option>
+                <option value="qtyDesc">Ποσότητα (μεγαλύτερη → μικρότερη)</option>
+                <option value="qtyAsc">Ποσότητα (μικρότερη → μεγαλύτερη)</option>
+                <option value="priceAsc">Τιμή (μικρότερη → μεγαλύτερη)</option>
+                <option value="priceDesc">Τιμή (μεγαλύτερη → μικρότερη)</option>
               </select>
             </label>
           </div>
@@ -99,11 +123,11 @@
         <div id="listingsContainer" class="listings-grid"></div>
 
         <div class="pagination-bar">
-          <button id="prevPage" class="page-btn" type="button">← Previous</button>
+          <button id="prevPage" class="page-btn" type="button">← Προηγούμενο</button>
 
           <div id="pageNumbers" class="page-numbers"></div>
 
-          <button id="nextPage" class="page-btn" type="button">Next →</button>
+          <button id="nextPage" class="page-btn" type="button">Επόμενο →</button>
         </div>
         
       </section>

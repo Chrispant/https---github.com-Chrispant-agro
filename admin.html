@@ -1,34 +1,1182 @@
 <!DOCTYPE html>
 <html lang="el">
 <head>
-<meta charset="UTF-8" />
-<title>Agrora Admin</title>
-<link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agrora Admin</title>
+  <style>
+    :root {
+      --bg: #f3f4f6;
+      --panel: #ffffff;
+      --panel-2: #f8fafc;
+      --text: #111827;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --blue: #2563eb;
+      --blue-hover: #1d4ed8;
+      --green: #16a34a;
+      --red: #dc2626;
+      --red-hover: #b91c1c;
+      --shadow: 0 10px 30px rgba(17, 24, 39, 0.08);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      background: linear-gradient(180deg, #111827 0%, #1f2937 100%);
+      color: #fff;
+      padding: 24px 20px;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 28px;
+    }
+
+    .brand-title {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .brand-sub {
+      color: rgba(255,255,255,0.7);
+      font-size: 14px;
+    }
+
+    .side-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .side-link,
+    .side-button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      text-decoration: none;
+      border: 0;
+      border-radius: 12px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      cursor: pointer;
+      font-size: 14px;
+      text-align: left;
+    }
+
+    .side-link:hover,
+    .side-button:hover {
+      background: rgba(255,255,255,0.12);
+    }
+
+    .content {
+      padding: 28px;
+      overflow-x: hidden;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .topbar h1 {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.1;
+    }
+
+    .topbar p {
+      margin: 6px 0 0;
+      color: var(--muted);
+    }
+
+    .topbar-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--blue-hover);
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .btn-secondary:hover {
+      background: #f9fafb;
+    }
+
+    .btn-danger {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .btn-danger:hover {
+      background: var(--red-hover);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .card {
+      background: var(--panel);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(229, 231, 235, 0.8);
+    }
+
+    .card-label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .card-value {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .search-wrap {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .search-input {
+      width: 100%;
+      border: 0;
+      outline: none;
+      background: transparent;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(360px, 0.8fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(229, 231, 235, 0.8);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 18px 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .panel-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .panel-sub {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .table-wrap {
+      overflow: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    th {
+      font-size: 13px;
+      color: var(--muted);
+      background: #fafafa;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    td strong {
+      display: block;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    td small {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .row-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .mini-btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .mini-edit {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+
+    .mini-delete {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .empty {
+      padding: 28px 18px;
+      color: var(--muted);
+    }
+
+    .editor {
+      padding: 18px;
+    }
+
+    .editor-empty {
+      color: var(--muted);
+      background: var(--panel-2);
+      border: 1px dashed var(--line);
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-bottom: 14px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #374151;
+    }
+
+    field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 13px;
+      font: inherit;
+      outline: none;
+      background: #fff;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: #93c5fd;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+    }
+
+    .field textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #ecfdf5;
+      color: #15803d;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .notice {
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .admin-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+    }
+
+    .admin-image-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .admin-image-card img {
+      display: block;
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      background: #f3f4f6;
+    }
+
+    .admin-image-actions {
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+    }
+
+    @media (max-width: 1200px) {
+      .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .shell {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+        height: auto;
+      }
+
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .content {
+        padding: 18px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-title">Agrora Admin</div>
+        <div class="brand-sub">Διαχείριση αγγελιών</div>
+      </div>
 
+      <div class="side-nav">
+        <button class="side-button" id="refreshBtnSide">↻ Ανανέωση λίστας</button>
+        <a class="side-link" href="submit.html">＋ Νέα αγγελία</a>
+        <a class="side-link" href="listings.html" target="_blank">↗ Προβολή site</a>
+      </div>
 
-<main style="max-width:700px;margin:60px auto;padding:20px;">
-<h1>Admin (Απενεργοποιημένο)</h1>
+      <div class="notice">
+        Αυτό είναι admin MVP πάνω στο τωρινό API σου. Μετά μπορούμε να βάλουμε:
+        image manager, featured, moderation, reports, login.
+      </div>
+    </aside>
 
+    <main class="content">
+      <div class="topbar">
+        <div>
+          <h1>Αγγελίες</h1>
+          <p>Γρήγορο edit και διαχείριση από ένα σημείο.</p>
+        </div>
 
-<p>
-Το παλιό admin εργαλείο βασιζόταν σε <code>listings.json</code> και
-<strong>δεν χρησιμοποιείται πλέον</strong>.
-</p>
+        <div class="topbar-actions">
+          <button class="btn btn-secondary" id="refreshBtnTop">Ανανέωση</button>
+          <a class="btn btn-primary" href="submit.html">Νέα αγγελία</a>
+        </div>
+      </div>
 
+      <section class="cards">
+        <div class="card">
+          <div class="card-label">Σύνολο αγγελιών</div>
+          <div class="card-value" id="statTotal">0</div>
+        </div>
 
-<p>
-Η Agrora χρησιμοποιεί τώρα βάση δεδομένων και API.
-Το admin θα αντικατασταθεί από φόρμα υποβολής προϊόντων.
-</p>
+        <div class="card">
+          <div class="card-label">Με τιμή</div>
+          <div class="card-value" id="statWithPrice">0</div>
+        </div>
 
+        <div class="card">
+          <div class="card-label">Χωρίς τιμή</div>
+          <div class="card-value" id="statNoPrice">0</div>
+        </div>
 
-<p style="margin-top:30px;color:#777;">
-Κατάσταση: <strong>DB-driven frontend ενεργό</strong>
-</p>
-</main>
+        <div class="card">
+          <div class="card-label">Μοναδικές καλλιέργειες</div>
+          <div class="card-value" id="statCrops">0</div>
+        </div>
+      </section>
 
+      <section class="toolbar">
+        <div class="search-wrap">
+          <input
+            id="searchInput"
+            class="search-input"
+            type="text"
+            placeholder="Αναζήτηση σε καλλιέργεια, περιοχή, όνομα, τηλέφωνο, email, public id..."
+          />
+        </div>
+        <button class="btn btn-secondary" id="clearSearchBtn">Καθαρισμός</button>
+        <button class="btn btn-secondary" id="closeEditorBtn">Κλείσιμο editor</button>
+      </section>
 
+      <section class="grid">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Λίστα αγγελιών</h2>
+              <div class="panel-sub" id="resultsInfo">0 αποτελέσματα</div>
+            </div>
+            <div class="status-pill">Live από βάση</div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Αγγελία</th>
+                  <th>Ποικιλία</th>
+                  <th>Περιοχή</th>
+                  <th>Ποσότητα</th>
+                  <th>Τιμή</th>
+                  <th>Ενέργειες</th>
+                </tr>
+              </thead>
+              <tbody id="adminTable">
+                <tr>
+                  <td colspan="5" class="empty">Φόρτωση...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">Editor</h2>
+              <div class="panel-sub" id="editorSubtitle">Επίλεξε μια αγγελία για επεξεργασία</div>
+            </div>
+          </div>
+
+          <div class="editor" id="editorRoot">
+            <div class="editor-empty">
+              Δεν έχει επιλεγεί αγγελία ακόμα.
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const API_LIST = "api/listings.php";
+    const API_GET = "api/admin/get-listing.php";
+    const API_UPDATE = "api/admin/update-listing.php";
+    const API_DELETE = "api/admin/delete-listing.php";
+    const API_DELETE_IMAGE = "api/admin/delete-image.php";
+    const API_UPLOAD_IMAGES = "api/admin/upload-images.php";
+
+    const adminTable = document.getElementById("adminTable");
+    const searchInput = document.getElementById("searchInput");
+    const clearSearchBtn = document.getElementById("clearSearchBtn");
+    const closeEditorBtn = document.getElementById("closeEditorBtn");
+    const refreshBtnTop = document.getElementById("refreshBtnTop");
+    const refreshBtnSide = document.getElementById("refreshBtnSide");
+    const resultsInfo = document.getElementById("resultsInfo");
+    const editorRoot = document.getElementById("editorRoot");
+    const editorSubtitle = document.getElementById("editorSubtitle");
+
+    const statTotal = document.getElementById("statTotal");
+    const statWithPrice = document.getElementById("statWithPrice");
+    const statNoPrice = document.getElementById("statNoPrice");
+    const statCrops = document.getElementById("statCrops");
+
+    const API_CROPS = "api/crops.php";
+    const API_REGIONS = "api/regions.php";
+    const API_VARIETIES = "data/varietyByCrop.json";
+
+    let VARIETIES_BY_CROP = {};
+
+    let CROPS_GROUPS = [];
+    let REGIONS_GROUPS = [];
+    let CROPS_MAP = new Map();
+    let REGIONS_MAP = new Map();
+
+    let allListings = [];
+    let filteredListings = [];
+    let currentEditingPublicId = null;
+
+    function esc(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function formatPrice(value) {
+      if (value === null || value === undefined || value === "") return "—";
+      return `${value} €/kg`;
+    }
+
+    function setStats(items) {
+      const total = items.length;
+      const withPrice = items.filter(item => item.pricePerKg !== null && item.pricePerKg !== undefined && item.pricePerKg !== "").length;
+      const noPrice = total - withPrice;
+      const crops = new Set(items.map(item => item.cropType).filter(Boolean)).size;
+
+      statTotal.textContent = total;
+      statWithPrice.textContent = withPrice;
+      statNoPrice.textContent = noPrice;
+      statCrops.textContent = crops;
+    }
+
+    function applySearch() {
+      const q = searchInput.value.trim().toLowerCase();
+
+      if (!q) {
+        filteredListings = [...allListings];
+      } else {
+        filteredListings = allListings.filter(item => {
+          const haystack = [
+            item.id,
+            item.cropType,
+            item.region,
+            item.quantityTons,
+            item.pricePerKg,
+            item.priceNote,
+            item.harvestStart,
+            item.harvestEnd,
+            item.description,
+            item?.seller?.name,
+            item?.seller?.phone,
+            item?.seller?.email
+          ]
+            .filter(v => v !== null && v !== undefined)
+            .join(" ")
+            .toLowerCase();
+
+          return haystack.includes(q);
+        });
+      }
+
+      renderTable(filteredListings);
+      resultsInfo.textContent = `${filteredListings.length} αποτέλεσμα${filteredListings.length === 1 ? "" : "τα"}`;
+    }
+
+    function renderTable(items) {
+      if (!items.length) {
+        adminTable.innerHTML = `
+          <tr>
+            <td colspan="5" class="empty">Δεν βρέθηκαν αγγελίες.</td>
+          </tr>
+        `;
+        return;
+      }
+
+      adminTable.innerHTML = items.map(item => `
+        <tr>
+          <td>
+            <strong>${esc(resolveCropLabel(item.cropType))}</strong>
+            <small>ID: ${esc(item.id || "—")}</small>
+          </td>
+          <td>${esc(resolveRegionLabel(item.region))}</td>
+          <td>${esc(resolveVarietyLabel(item.cropType, item.variety))}</td>
+          <td>${esc(item.quantityTons ?? "—")} tn</td>
+          <td>${esc(formatPrice(item.pricePerKg))}</td>
+          <td>
+            <div class="row-actions">
+              <button class="mini-btn mini-edit" data-edit="${esc(item.id)}">Edit</button>
+              <button class="mini-btn mini-delete" data-delete="${esc(item.id)}">Delete</button>
+            </div>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    function renderEditorEmpty() {
+      currentEditingPublicId = null;
+      editorSubtitle.textContent = "Επίλεξε μια αγγελία για επεξεργασία";
+      editorRoot.innerHTML = `
+        <div class="editor-empty">
+          Δεν έχει επιλεγεί αγγελία ακόμα.
+        </div>
+      `;
+    }
+
+    function renderEditorForm(listing, images = []) {
+      editorSubtitle.textContent = `Editing: ${listing.public_id || listing.crop_type || "Αγγελία"}`;
+
+      editorRoot.innerHTML = `
+        <form id="editForm">
+          <input type="hidden" name="id" value="${esc(listing.public_id)}" />
+
+                  <div class="field">
+              <label>Καλλιέργεια</label>
+              <select name="cropType" id="adminCropType">
+                <option value="">Επίλεξε καλλιέργεια</option>
+                ${renderGroupedOptions(CROPS_GROUPS, listing.crop_type)}
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Ποικιλία</label>
+              <select name="variety" id="adminVariety">
+                ${renderVarietyOptions(listing.crop_type, listing.variety)}
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Περιοχή</label>
+              <select name="region" id="adminRegion">
+                <option value="">Επίλεξε περιοχή</option>
+                ${renderGroupedOptions(REGIONS_GROUPS, listing.region)}
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Ποσότητα (τόνοι)</label>
+              <input name="quantityTons" type="number" step="0.01" value="${esc(listing.quantity_tons)}" />
+            </div>
+
+            <div class="field">
+              <label>Τιμή / κιλό</label>
+              <input name="pricePerKg" type="number" step="0.01" value="${esc(listing.price_per_kg ?? "")}" />
+            </div>
+
+            <div class="field full">
+              <label>Σημείωση τιμής</label>
+              <input name="priceNote" value="${esc(listing.price_note ?? "")}" placeholder="π.χ. Συζητήσιμη / ανάλογα την ποσότητα" />
+            </div>
+
+            <div class="field">
+              <label>Έναρξη συγκομιδής</label>
+              <input name="harvestStart" value="${esc(listing.harvest_start ?? "")}" placeholder="MM-YYYY" />
+            </div>
+
+            <div class="field">
+              <label>Λήξη συγκομιδής</label>
+              <input name="harvestEnd" value="${esc(listing.harvest_end ?? "")}" placeholder="MM-YYYY" />
+            </div>
+
+            <div class="field">
+              <label>Όνομα παραγωγού</label>
+              <input name="sellerName" value="${esc(listing.seller_name ?? "")}" />
+            </div>
+
+            <div class="field">
+              <label>Τηλέφωνο</label>
+              <input name="sellerPhone" value="${esc(listing.seller_phone ?? "")}" />
+            </div>
+
+            <div class="field full">
+              <label>Email</label>
+              <input name="sellerEmail" value="${esc(listing.seller_email ?? "")}" />
+            </div>
+
+            <div class="field full">
+              <label>Περιγραφή</label>
+              <textarea name="description">${esc(listing.description ?? "")}</textarea>
+            </div>
+          </div>
+
+          <div class="field full">
+            <label>Εικόνες αγγελίας</label>
+
+            <div class="admin-gallery" id="adminGallery">
+              ${
+                images.length
+                  ? images.map(img => `
+                    <div class="admin-image-card">
+                      <img src="${esc(img.path)}" alt="listing image">
+                      <div class="admin-image-actions">
+                        <button
+                          type="button"
+                          class="btn btn-danger admin-delete-image-btn"
+                          data-image-id="${esc(img.id)}"
+                        >
+                          Διαγραφή
+                        </button>
+                      </div>
+                    </div>
+                  `).join("")
+                  : `<div class="editor-empty">Δεν υπάρχουν εικόνες ακόμα.</div>`
+              }
+            </div>
+          </div>
+
+<div class="field full">
+  <label>Προσθήκη νέων εικόνων</label>
+  <input type="file" id="adminImageUpload" accept="image/jpeg,image/png,image/webp" multiple>
+  <div class="notice">Μέχρι 6 συνολικά εικόνες ανά αγγελία.</div>
+</div>
+
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Αποθήκευση</button>
+            <button class="btn btn-secondary" type="button" id="cancelEditBtn">Ακύρωση</button>
+          </div>
+
+          <div class="notice">
+            Σε αυτό το βήμα κάνουμε edit στα βασικά πεδία της αγγελίας.
+            Στο επόμενο upgrade μπορούμε να προσθέσουμε images manager, dropdowns για crops / regions / varieties και reports.
+          </div>
+        </form>
+      `;
+
+      const editForm = document.getElementById("editForm");
+      const cancelEditBtn = document.getElementById("cancelEditBtn");
+      const cropSelect = document.getElementById("adminCropType");
+      const varietySelect = document.getElementById("adminVariety");
+
+      cropSelect.addEventListener("change", () => {
+        const cropValue = cropSelect.value;
+        varietySelect.innerHTML = renderVarietyOptions(cropValue, "");
+      });
+
+      editForm.addEventListener("submit", saveCurrentListing);
+      cancelEditBtn.addEventListener("click", renderEditorEmpty);
+
+      const adminGallery = document.getElementById("adminGallery");
+const adminImageUpload = document.getElementById("adminImageUpload");
+
+      adminGallery?.addEventListener("click", async (e) => {
+        const deleteBtn = e.target.closest("[data-image-id]");
+        if (!deleteBtn) return;
+
+        const imageId = deleteBtn.dataset.imageId;
+        const ok = confirm("Να διαγραφεί αυτή η εικόνα;");
+        if (!ok) return;
+
+        try {
+          const res = await fetch(API_DELETE_IMAGE, {
+            method: "POST",
+            body: new URLSearchParams({ imageId })
+          });
+
+          const data = await res.json().catch(() => ({}));
+
+          if (!res.ok || data.error) {
+            throw new Error(data.error || "Αποτυχία διαγραφής εικόνας");
+          }
+
+          await openEdit(listing.public_id);
+          await loadListings();
+        } catch (err) {
+          alert(err.message || "Δεν έγινε η διαγραφή εικόνας.");
+        }
+      });
+
+      adminImageUpload?.addEventListener("change", async () => {
+        const files = adminImageUpload.files;
+        if (!files || !files.length) return;
+
+        const formData = new FormData();
+        formData.append("id", listing.public_id);
+
+        for (const file of files) {
+          formData.append("images[]", file);
+        }
+
+        try {
+          const res = await fetch(API_UPLOAD_IMAGES, {
+            method: "POST",
+            body: formData
+          });
+
+          const data = await res.json().catch(() => ({}));
+
+          if (!res.ok || data.error) {
+            throw new Error(data.error || "Αποτυχία upload εικόνων");
+          }
+
+          adminImageUpload.value = "";
+          await openEdit(listing.public_id);
+          await loadListings();
+        } catch (err) {
+          alert(err.message || "Δεν έγινε το upload.");
+        }
+      });
+    }
+    //helpers
+      function buildVarietyMapForCrop(cropValue) {
+    const map = new Map();
+    const items = VARIETIES_BY_CROP?.[cropValue] || [];
+    for (const item of items) {
+      if (item?.value && item?.label) {
+        map.set(item.value, item.label);
+      }
+    }
+    return map;
+  }
+
+  function resolveVarietyLabel(cropValue, varietyValue) {
+    if (!varietyValue) return "—";
+    const map = buildVarietyMapForCrop(cropValue);
+    return map.get(varietyValue) || varietyValue;
+  }
+
+  function renderVarietyOptions(cropValue, selectedValue) {
+    const items = VARIETIES_BY_CROP?.[cropValue] || [];
+
+    if (!items.length) {
+      return `<option value="">Δεν υπάρχουν ποικιλίες</option>`;
+    }
+
+    return `
+      <option value="">Επίλεξε ποικιλία</option>
+      ${items.map(item => {
+        const selected = String(item.value) === String(selectedValue) ? "selected" : "";
+        return `<option value="${escapeAttr(item.value)}" ${selected}>${esc(item.label)}</option>`;
+      }).join("")}
+    `;
+  }
+
+        function buildValueToLabelMapFromGroups(json) {
+      const map = new Map();
+      const groups = json?.groups || [];
+      for (const g of groups) {
+        const items = g?.items || [];
+        for (const it of items) {
+          if (it?.value && it?.label) {
+            map.set(it.value, it.label);
+          }
+        }
+      }
+      return map;
+    }
+
+    function escapeAttr(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
+    }
+
+    function resolveCropLabel(value) {
+      return CROPS_MAP.get(value) || value || "—";
+    }
+
+    function resolveRegionLabel(value) {
+      return REGIONS_MAP.get(value) || value || "—";
+    }
+
+    function renderGroupedOptions(groups, selectedValue) {
+      return (groups || []).map(group => {
+        const groupLabel = esc(group.groupLabel || group.label || "");
+        const items = Array.isArray(group.items) ? group.items : [];
+
+        const options = items.map(item => {
+          const value = item?.value ?? "";
+          const label = item?.label ?? value ?? "";
+          const selected = String(value) === String(selectedValue) ? "selected" : "";
+
+          return `<option value="${escapeAttr(value)}" ${selected}>${esc(label)}</option>`;
+        }).join("");
+
+        return `
+          <optgroup label="${groupLabel}">
+            ${options}
+          </optgroup>
+        `;
+      }).join("");
+    }
+
+    async function loadDropdownData() {
+      const [cropsRes, regionsRes, varietiesRes] = await Promise.all([
+        fetch(API_CROPS),
+        fetch(API_REGIONS),
+        fetch(API_VARIETIES)
+      ]);
+
+      if (!cropsRes.ok) throw new Error("Αποτυχία φόρτωσης crops");
+      if (!regionsRes.ok) throw new Error("Αποτυχία φόρτωσης regions");
+      if (!varietiesRes.ok) throw new Error("Αποτυχία φόρτωσης varieties");
+
+      const cropsJson = await cropsRes.json();
+      const regionsJson = await regionsRes.json();
+      const varietiesJson = await varietiesRes.json();
+
+      CROPS_GROUPS = cropsJson?.groups || [];
+      REGIONS_GROUPS = regionsJson?.groups || [];
+
+      CROPS_MAP = buildValueToLabelMapFromGroups(cropsJson);
+      REGIONS_MAP = buildValueToLabelMapFromGroups(regionsJson);
+
+      VARIETIES_BY_CROP = varietiesJson || {};
+    }
+
+    async function loadListings() {
+      adminTable.innerHTML = `
+        <tr>
+          <td colspan="5" class="empty">Φόρτωση...</td>
+        </tr>
+      `;
+
+      const res = await fetch(API_LIST);
+      if (!res.ok) {
+        throw new Error("Αποτυχία φόρτωσης αγγελιών");
+      }
+
+      const data = await res.json();
+      allListings = Array.isArray(data) ? data : [];
+      filteredListings = [...allListings];
+
+      setStats(allListings);
+      applySearch();
+    }
+
+    async function openEdit(publicId) {
+      currentEditingPublicId = publicId;
+      editorRoot.classList.add("loading");
+      editorRoot.innerHTML = `<div class="editor-empty">Φόρτωση αγγελίας...</div>`;
+
+      const res = await fetch(`${API_GET}?id=${encodeURIComponent(publicId)}`);
+      if (!res.ok) {
+        editorRoot.classList.remove("loading");
+        editorRoot.innerHTML = `<div class="editor-empty">Δεν βρέθηκε η αγγελία.</div>`;
+        return;
+      }
+
+      const data = await res.json();
+      editorRoot.classList.remove("loading");
+
+      if (!data || !data.listing) {
+        editorRoot.innerHTML = `<div class="editor-empty">Δεν βρέθηκε η αγγελία.</div>`;
+        return;
+      }
+
+      renderEditorForm(data.listing, data.images || []);
+    }
+
+    async function saveCurrentListing(e) {
+      e.preventDefault();
+
+      const formEl = e.currentTarget;
+      const formData = new FormData(formEl);
+
+      editorRoot.classList.add("loading");
+
+      try {
+        const res = await fetch(API_UPDATE, {
+          method: "POST",
+          body: new URLSearchParams([...formData.entries()])
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok || data.error) {
+          throw new Error(data.error || "Αποτυχία αποθήκευσης");
+        }
+
+        await loadListings();
+        await openEdit(formData.get("id"));
+        alert("Οι αλλαγές αποθηκεύτηκαν.");
+      } catch (err) {
+        alert(err.message || "Κάτι πήγε στραβά.");
+      } finally {
+        editorRoot.classList.remove("loading");
+      }
+    }
+
+    async function deleteListing(publicId) {
+      const ok = confirm("Θες σίγουρα να διαγράψεις αυτή την αγγελία;");
+      if (!ok) return;
+
+      try {
+        const res = await fetch(API_DELETE, {
+          method: "POST",
+          body: new URLSearchParams({ id: publicId })
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok || data.error) {
+          throw new Error(data.error || "Αποτυχία διαγραφής");
+        }
+
+        if (currentEditingPublicId === publicId) {
+          renderEditorEmpty();
+        }
+
+        await loadListings();
+      } catch (err) {
+        alert(err.message || "Δεν έγινε η διαγραφή.");
+      }
+    }
+
+    adminTable.addEventListener("click", (e) => {
+      const editBtn = e.target.closest("[data-edit]");
+      if (editBtn) {
+        openEdit(editBtn.dataset.edit);
+        return;
+      }
+
+      const deleteBtn = e.target.closest("[data-delete]");
+      if (deleteBtn) {
+        deleteListing(deleteBtn.dataset.delete);
+      }
+    });
+
+    searchInput.addEventListener("input", applySearch);
+
+    clearSearchBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      applySearch();
+    });
+
+    closeEditorBtn.addEventListener("click", renderEditorEmpty);
+    refreshBtnTop.addEventListener("click", loadListings);
+    refreshBtnSide.addEventListener("click", loadListings);
+
+   (async function initAdmin() {
+  try {
+    await loadDropdownData();
+    await loadListings();
+  } catch (err) {
+    adminTable.innerHTML = `
+      <tr>
+        <td colspan="5" class="empty">${esc(err.message || "Σφάλμα φόρτωσης")}</td>
+      </tr>
+    `;
+  }
+})();
+  </script>
 </body>
 </html>

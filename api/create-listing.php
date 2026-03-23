@@ -21,6 +21,7 @@ function make_public_id($crop, $region) {
 
 // ---- Read fields ----
 $cropType = trim($_POST["cropType"] ?? "");
+$variety = trim($_POST["variety"] ?? "");
 $region   = trim($_POST["region"] ?? "");
 $quantityTons = $_POST["quantityTons"] ?? "";
 $pricePerKg   = $_POST["pricePerKg"] ?? "";
@@ -33,12 +34,22 @@ $sellerEmail  = trim($_POST["sellerEmail"] ?? "");
 $description  = trim($_POST["description"] ?? "");
 
 // ---- Validate minimal ----
-if ($cropType === "") bad("cropType is required");
-if ($region === "") bad("region is required");
-if ($sellerName === "") bad("sellerName is required");
+if ($cropType === "") bad("Απαιτείται Καλλιέργεια");
+if ($variety === "") $variety = null;
+if ($region === "") bad("Απαιτείται Περιοχή");
+if ($sellerName === "") bad("Απαιτείται Όνομα");
+
+if ($sellerPhone === "") bad("Απαιτείται Τηλέφωνο");
+if ($harvestStart === "") bad("Απαιτείται Αρχή Συγκομιδής");
+if ($harvestEnd === "") bad("Απαιτείται Τέλος Συγκομιδής");
+
+if (!preg_match('/^\d{4}-\d{2}$/', $harvestStart)) bad("harvestStart must be YYYY-MM");
+if (!preg_match('/^\d{4}-\d{2}$/', $harvestEnd)) bad("harvestEnd must be YYYY-MM");
+
+if ($harvestEnd < $harvestStart) bad("Το Τέλος Συγκομιδής πρέπει να είναι ίδιο ή μετά του Αρχή Συγκομιδής");
 
 if ($quantityTons === "" || !is_numeric($quantityTons) || floatval($quantityTons) <= 0) {
-  bad("quantityTons must be a positive number");
+  bad("Η ποσότητα τόνων πρέπει να είναι Θετικός αριθμός");
 }
 $quantityTons = floatval($quantityTons);
 
@@ -46,12 +57,9 @@ $pricePerKg = trim((string)$pricePerKg);
 if ($pricePerKg === "") {
   $pricePerKgVal = null;
 } else {
-  if (!is_numeric($pricePerKg) || floatval($pricePerKg) < 0) bad("pricePerKg must be a number >= 0");
+  if (!is_numeric($pricePerKg) || floatval($pricePerKg) < 0) bad("Η τιμή πρέπει να είναι >= 0");
   $pricePerKgVal = floatval($pricePerKg);
 }
-
-if ($harvestStart !== "" && !preg_match('/^\d{4}-\d{2}$/', $harvestStart)) bad("harvestStart must be YYYY-MM");
-if ($harvestEnd !== "" && !preg_match('/^\d{4}-\d{2}$/', $harvestEnd)) bad("harvestEnd must be YYYY-MM");
 
 // ---- Handle uploads ----
 $uploadDirFs = realpath(__DIR__ . "/../uploads/listings");
@@ -77,13 +85,13 @@ if (isset($_FILES["images"]) && is_array($_FILES["images"]["name"])) {
     if ($size <= 0 || $size > $maxBytes) bad("Each image must be <= 3MB");
 
     $mime = mime_content_type($tmp);
-    if (!isset($allowed[$mime])) bad("Unsupported image type. Use JPG, PNG, or WEBP.");
+    if (!isset($allowed[$mime])) bad("Ο τύπος εικόνας δεν υποστηρίζεται. Χρησημοποιείστε JPG, PNG, ή WEBP.");
 
     $ext = $allowed[$mime];
     $fileName = "l_" . date("Ymd_His") . "_" . substr(bin2hex(random_bytes(4)), 0, 8) . "." . $ext;
 
     $destFs = $uploadDirFs . DIRECTORY_SEPARATOR . $fileName;
-    if (!move_uploaded_file($tmp, $destFs)) bad("Failed to store uploaded image");
+    if (!move_uploaded_file($tmp, $destFs)) bad("Αποτυχία αποθήκευσης εικόνας");
 
     // public path from web root
     $storedPaths[] = "uploads/listings/" . $fileName;
@@ -97,17 +105,18 @@ try {
   $pdo->beginTransaction();
 
   $stmt = $pdo->prepare("
-    INSERT INTO listings
-      (public_id, crop_type, region, quantity_tons, price_per_kg, price_note,
-       harvest_start, harvest_end, seller_name, seller_phone, seller_email,
-       description, created_at)
-    VALUES
-      (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
+ INSERT INTO listings
+  (public_id, crop_type, variety, region, quantity_tons, price_per_kg, price_note,
+   harvest_start, harvest_end, seller_name, seller_phone, seller_email,
+   description, created_at)
+VALUES
+  (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
   ");
 
   $stmt->execute([
     $publicId,
     $cropType,
+    $variety,
     $region,
     $quantityTons,
     $pricePerKgVal,

@@ -7,6 +7,12 @@ let currentPage = 1;
 const pageSize = 9; // 9 = nice 3x3 grid; change anytime
 let lastFiltered = []; // keeps current filtered results for paging
 
+let CROPS_LABELS = null;
+let REGIONS_LABELS = null;
+let VARIETIES_BY_CROP = null
+let selectedCropValues = new Set();
+let CROPS_GROUPS = [];
+
 
 const els = {
   form: null,
@@ -29,6 +35,59 @@ const els = {
 };
 
 // ---------- Helpers ----------
+
+function buildValueToLabelMapFromGroups(json) {
+  const map = new Map();
+  const groups = json?.groups || [];
+  for (const g of groups) {
+    const items = g?.items || [];
+    for (const it of items) {
+      if (it?.value && it?.label) map.set(it.value, it.label);
+    }
+  }
+  return map;
+}
+
+async function loadLabelMaps() {
+
+  if (CROPS_LABELS && REGIONS_LABELS && VARIETIES_BY_CROP) return;
+
+  const [cropsJson, regionsJson, varietiesJson] = await Promise.all([
+    fetch("data/crops.json").then(r => r.json()),
+    fetch("data/regions.json").then(r => r.json()),
+    fetch("data/varietyByCrop.json").then(r => r.json()).catch(() => ({}))
+  ]);
+
+  CROPS_LABELS = buildValueToLabelMapFromGroups(cropsJson);
+  REGIONS_LABELS = buildValueToLabelMapFromGroups(regionsJson);
+  VARIETIES_BY_CROP = varietiesJson || {};
+  CROPS_GROUPS = cropsJson?.groups || [];
+
+  console.log("CROPS_GROUPS", CROPS_GROUPS);
+console.log("CROPS_LABELS size", CROPS_LABELS?.size);
+}
+
+function resolveCropLabel(v) {
+  if (!v) return "";
+  return CROPS_LABELS?.get(v) || v; // fallback: δείξε όπως είναι
+}
+
+function resolveRegionLabel(v) {
+  if (!v) return "";
+  return REGIONS_LABELS?.get(v) || v;
+}
+
+function resolveVarietyLabel(cropValue, varietyValue) {
+  if (!varietyValue) return "";
+  const arr = VARIETIES_BY_CROP?.[cropValue];
+  if (Array.isArray(arr)) {
+    const found = arr.find(x => x.value === varietyValue);
+    if (found?.label) return found.label;
+  }
+  return varietyValue;
+}
+
+
 function toNumber(value) {
   if (value === "" || value === null || value === undefined) return null;
   const n = Number(value);
@@ -59,7 +118,7 @@ function escapeHtml(str) {
 
 function formatPrice(l) {
   if (l.pricePerKg === null || l.pricePerKg === undefined) {
-    return l.priceNote ? l.priceNote : "Price not specified";
+    return l.priceNote ? l.priceNote : "Ζητήστε τιμή";
   }
   return `€${Number(l.pricePerKg).toFixed(2)} / kg`;
 }
@@ -74,7 +133,7 @@ function updateActiveFiltersIndicator() {
 
   const labels = [];
 
-  if (els.cropType?.value) labels.push("Crop");
+  if (selectedCropValues.size > 0) labels.push("Crop");
   if (els.region?.value) labels.push("Region");
 
   const minQ = (els.minQuantity?.value || "").trim();
@@ -91,11 +150,11 @@ function updateActiveFiltersIndicator() {
   if (sortVal !== "newest") labels.push("Sort");
 
   els.activeFilters.textContent =
-    labels.length ? `Active filters: ${labels.join(", ")}` : "No active filters";
+    labels.length ? `Ενεργά Φίλτρα: ${labels.join(", ")}` : "Χωρίς Φίλτρα";
 }
 
 function hasActiveFilters() {
-  if (els.cropType?.value) return true;
+  if (selectedCropValues.size > 0) return true;
   if (els.region?.value) return true;
 
   if ((els.minQuantity?.value || "").trim()) return true;
@@ -122,6 +181,101 @@ function updateResetButtonVisibility() {
   }
 }
 
+function updateCropLabelUI() {
+  const label = document.getElementById("cropSelectLabel");
+  if (!label) return;
+
+  if (!selectedCropValues.size) {
+    label.textContent = "Όλες οι καλλιέργειες";
+    return;
+  }
+
+  if (selectedCropValues.size === 1) {
+    const val = [...selectedCropValues][0];
+    label.textContent = CROPS_LABELS.get(val) || val;
+    return;
+  }
+
+  label.textContent = `${selectedCropValues.size} καλλιέργειες`;
+}
+
+function setupCropMultiSelect() {
+  const toggle = document.getElementById("cropSelectToggle");
+  const menu = document.getElementById("cropSelectMenu");
+  const search = document.getElementById("cropSearchInput");
+  const options = document.getElementById("cropOptions");
+
+  if (!toggle || !menu) return;
+
+  toggle.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    menu.hidden = !menu.hidden;
+    renderCropOptions(search?.value || "");
+    console.log("toggle clicked", { hiddenBefore: menu.hidden });
+  });
+
+  search?.addEventListener("input", () => {
+    renderCropOptions(search.value || "");
+  });
+
+  options?.addEventListener("change", (e) => {
+    const input = e.target.closest("input");
+    if (!input) return;
+
+    if (input.checked) selectedCropValues.add(input.value);
+    else selectedCropValues.delete(input.value);
+
+    updateCropLabelUI();
+    writeFiltersToURL();
+    applyFilters();
+  });
+
+  const clearBtn = document.getElementById("cropClearBtn");
+  const allBtn = document.getElementById("cropSelectAllBtn");
+
+clearBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  selectedCropValues.clear();
+  currentPage = 1;
+  renderCropOptions(search?.value || "");
+  updateCropLabelUI();
+  writeFiltersToURL();
+  applyFilters();
+  updateActiveFiltersIndicator();
+  updateResetButtonVisibility();
+});
+
+allBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  selectedCropValues.clear();
+  currentPage = 1;
+  renderCropOptions(search?.value || "");
+  updateCropLabelUI();
+  writeFiltersToURL();
+  applyFilters();
+  updateActiveFiltersIndicator();
+  updateResetButtonVisibility();
+});
+
+  document.addEventListener("click", (e) => {
+    const wrap = document.getElementById("cropMultiSelect");
+    if (!wrap) return;
+    if (!wrap.contains(e.target)) {
+      menu.hidden = true;
+    }
+  });
+
+  updateCropLabelUI();
+  console.log("setupCropMultiSelect bound");
+console.log("toggle", toggle);
+console.log("menu", menu);
+}
+
 // ---------- Populate filters from data ----------
 function populateSelect(selectEl, values, allLabel) {
   if (!selectEl) return;
@@ -135,12 +289,25 @@ function populateSelect(selectEl, values, allLabel) {
 }
 
 function populateFiltersFromListings(items) {
-  const cropTypes = Array.from(new Set(items.map((l) => l.cropType).filter(Boolean))).sort();
-  const regions = Array.from(new Set(items.map((l) => l.region).filter(Boolean))).sort();
+  // παίρνουμε τα unique values από τα listings
+  const cropValues = Array.from(new Set(items.map(l => l.cropType).filter(Boolean))).sort();
+  const regionValues = Array.from(new Set(items.map(l => l.region).filter(Boolean))).sort();
 
-  populateSelect(els.cropType, cropTypes, "All crops");
-  populateSelect(els.region, regions, "All regions");
+
+  // region select: value = slug, text = label
+  if (els.region) {
+    els.region.innerHTML = `<option value="">Όλες οι περιοχές</option>`;
+    regionValues.forEach((v) => {
+      const opt = document.createElement("option");
+      opt.value = v;
+      opt.textContent = resolveRegionLabel(v); // <-- label
+      els.region.appendChild(opt);
+    });
+  }
 }
+
+
+
 
 // ---------- Sorting ----------
 function sortListings(items) {
@@ -181,6 +348,46 @@ function sortListings(items) {
 }
 
 // ---------- Rendering ----------
+
+function renderCropOptions(search = "") {
+  const root = document.getElementById("cropOptions");
+  if (!root) return;
+
+  const q = search.toLowerCase();
+
+  root.innerHTML = CROPS_GROUPS.map(group => {
+    const items = (group.items || []).filter(i => {
+      if (!q) return true;
+      return (
+        String(i.label || "").toLowerCase().includes(q) ||
+        String(i.value || "").toLowerCase().includes(q)
+      );
+    });
+
+    if (!items.length) return "";
+
+    return `
+    <div class="crop-multi-group">
+      <div class="crop-multi-group-label">${escapeHtml(group.groupLabel || group.label || "")}</div>
+      ${items.map(item => `
+        <label class="crop-multi-option">
+          <input
+            type="checkbox"
+            value="${escapeHtml(item.value)}"
+            ${selectedCropValues.has(item.value) ? "checked" : ""}
+          />
+           <span class="crop-multi-option-text">${escapeHtml(item.label)}</span>
+        </label>
+      `).join("")}
+    </div>
+    `;
+  }).join("");
+  console.log("renderCropOptions called", {
+  groupsCount: CROPS_GROUPS.length,
+  search
+});
+}
+
 function renderListings(items) {
   if (!els.container) return;
   
@@ -191,22 +398,22 @@ function renderListings(items) {
 
   els.container.innerHTML = `
     <div class="empty-state">
-      <div class="empty-title">No listings match your filters</div>
+      <div class="empty-title">Δεν υπάρχει αγγελία με αυτά τα φίλτρα</div>
       <p class="empty-text">
-        Try broadening your search. Small changes can bring results back.
+        Προσπαθήστε να διευρύνετε την αναζήτησή σας. Λίγότερα φίλτρα μπορεί να αποφέρουν περισσότερα αποτελέσματα.
       </p>
 
       <ul class="empty-hints">
-        <li>Remove or widen <strong>Price</strong> and <strong>Quantity</strong> ranges.</li>
-        <li>Try a different <strong>Region</strong>, or clear it to search all of Greece.</li>
-        <li>Clear <strong>Harvest period</strong> if it’s too specific.</li>
+        <li>Αφαιρέστε τα φίλτρα <strong>Τιμή</strong> και <strong>Ποσότητα</strong></li>
+        <li>Δοκιμάστε διαφορετική <strong>Περιοχή</strong>, ή απλά καθαρίστε αυτό το φίλτρο και ψάξτε σε όλη την Ελλάδα.</li>
+        <li>Καθαρίστε <strong>Συγκομιδή</strong> αν είναι πολύ συγκεκριμένο.</li>
       </ul>
 
       <div class="empty-actions">
-        <button type="button" class="empty-btn primary" id="emptyReset">Reset filters</button>
-        <button type="button" class="empty-btn" id="emptyClearPrice">Clear price</button>
-        <button type="button" class="empty-btn" id="emptyClearQty">Clear quantity</button>
-        <button type="button" class="empty-btn" id="emptyShowAll">Show all</button>
+        <button type="button" class="empty-btn primary" id="emptyReset">Επαναφορά φίλτρων</button>
+        <button type="button" class="empty-btn" id="emptyClearPrice">Επαναφορά τιμής</button>
+        <button type="button" class="empty-btn" id="emptyClearQty">Επαναφορά ποσότητας</button>
+        <button type="button" class="empty-btn" id="emptyShowAll">Δειξ'τα όλα</button>
       </div>
     </div>
   `;
@@ -282,44 +489,76 @@ function renderListings(items) {
 
   els.container.innerHTML = items
     .map((l) => {
-      const title = `${l.cropType} • ${l.region}`;
-      const harvest = `${l.harvestStart ?? "?"} → ${l.harvestEnd ?? "?"}`;
+      const cropLabel = resolveCropLabel(l.cropType);
+      const regionLabel = resolveRegionLabel(l.region);
+      const varietyLabel = resolveVarietyLabel(l.cropType, l.variety);
+
+      const title = `${cropLabel} • ${regionLabel}`;
+
+      //helper MM-YYYY
+      function formatHarvestMonth(ym) {
+        if (!ym || !String(ym).includes("-")) return ym || "?";
+        const [y, m] = String(ym).split("-");
+        return `${m}-${y}`;
+      }
+
+      const harvest = `${formatHarvestMonth(l.harvestStart)} → ${formatHarvestMonth(l.harvestEnd)}`;
       const qty = l.quantityTons !== undefined ? `${l.quantityTons} τόνοι` : "—";
       const price = formatPrice(l);
 
       return `
-        <article class="listing-card">
-          <a class="listing-link" href="listing.html?id=${encodeURIComponent(l.id)}&return=${encodeURIComponent(returnUrl)}">
-            <div class="listing-image">
-              <img
-                src="${escapeHtml(l.image || "images/listings/placeholder.webp")}"
-                alt="${escapeHtml(l.cropType || "Listing")}"
-                loading="lazy"
-              >
+      <article class="listing-row-card">
+        <a class="listing-row-link" href="listing.html?id=${encodeURIComponent(l.id)}&return=${encodeURIComponent(returnUrl)}">
+          <div class="listing-row-image">
+            <img
+              src="${escapeHtml(l.image || "images/listings/placeholder.webp")}"
+              alt="${escapeHtml(cropLabel || "Listing")}"
+              loading="lazy"
+            >
+          </div>
+
+          <div class="listing-row-main">
+            <div class="listing-row-topline">
+              <div class="listing-row-badges">
+                <span class="listing-chip">${escapeHtml(regionLabel || "—")}</span>
+                ${varietyLabel ? `<span class="listing-chip chip-light">${escapeHtml(varietyLabel)}</span>` : ""}
+              </div>
+              <div class="listing-row-date">Δημοσίευση: ${escapeHtml(formatDateGR(l.createdAt))}</div>
             </div>
 
-            <div class="listing-body">
-              <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
-                <span class="badge">🌿 ${escapeHtml(l.cropType || "Καλλιέργεια")}</span>
-                <span class="badge badge-muted">📍 ${escapeHtml(l.region || "Περιοχή")}</span>
-              </div>
-              <h3 class="listing-title">${escapeHtml(title)}</h3>
+            <h3 class="listing-row-title">${escapeHtml(cropLabel || "Αγγελία")}</h3>
 
-              <div class="listing-meta">
-                <div><strong>Quantity:</strong> ${escapeHtml(qty)}</div>
-                <div><strong>Harvest:</strong> ${escapeHtml(harvest)}</div>
-                <div><strong>Price:</strong> ${escapeHtml(price)}</div>
-              </div>
-
-              <div class="listing-seller">
-                <div><strong>Seller:</strong> ${escapeHtml(l.seller?.name || "—")}</div>
-              </div>
+            <div class="listing-row-meta">
+              <div><strong>Ποσότητα:</strong> ${escapeHtml(qty)}</div>
+              <div><strong>Συγκομιδή:</strong> ${escapeHtml(harvest)}</div>
             </div>
-          </a>
-        </article>
-      `;
+
+            <p class="listing-row-desc">
+              ${escapeHtml((l.description || "").slice(0, 180))}${(l.description || "").length > 180 ? "..." : ""}
+            </p>
+          </div>
+
+          <div class="listing-row-side">
+            <div class="listing-row-price">${escapeHtml(price)}</div>
+            <div class="listing-row-seller">${escapeHtml(l?.seller?.name || "Παραγωγός")}</div>
+            <div class="listing-row-cta">Προβολή αγγελίας</div>
+          </div>
+        </a>
+      </article>
+    `;
     })
     .join("");
+}
+
+function formatDateGR(dateStr) {
+  if (!dateStr) return "—";
+
+  const parts = dateStr.split("-");
+  if (parts.length !== 3) return dateStr;
+
+  const [year, month, day] = parts;
+
+  return `${day}-${month}-${year}`;
 }
 
 function renderCurrentPage() {
@@ -401,7 +640,7 @@ function renderPageNumbers(totalPages) {
 
 // ---------- Filtering ----------
 function applyFilters() {
-  const selectedCrop = els.cropType?.value || "";
+  const hasCropFilter = selectedCropValues.size > 0;
   const selectedRegion = els.region?.value || "";
 
   const minQty = toNumber(els.minQuantity?.value);
@@ -415,7 +654,7 @@ function applyFilters() {
 
   const filtered = listings.filter((l) => {
     // Crop / region
-    if (selectedCrop && l.cropType !== selectedCrop) return false;
+    if (hasCropFilter && !selectedCropValues.has(l.cropType)) return false;
     if (selectedRegion && l.region !== selectedRegion) return false;
 
     // Quantity (τόνοι)
@@ -451,7 +690,14 @@ function readFiltersFromURL() {
  
 
 
-  if (els.cropType) els.cropType.value = params.get("cropType") || "";
+const cropTypesParam = params.get("cropTypes") || "";
+const legacyCropType = params.get("cropType") || "";
+
+const cropTypes = cropTypesParam
+  ? cropTypesParam.split(",").map(v => v.trim()).filter(Boolean)
+  : (legacyCropType ? [legacyCropType] : []);
+
+selectedCropValues = new Set(cropTypes);
   if (els.region) els.region.value = params.get("region") || "";
   if (els.minQuantity) els.minQuantity.value = params.get("minQuantity") || "";
   if (els.maxQuantity) els.maxQuantity.value = params.get("maxQuantity") || "";
@@ -472,7 +718,9 @@ function writeFiltersToURL() {
     if (val) params.set(key, val);
   };
 
-  setIfValue("cropType", els.cropType);
+if (selectedCropValues.size) {
+  params.set("cropTypes", [...selectedCropValues].join(","));
+}  
   setIfValue("region", els.region);
   setIfValue("minQuantity", els.minQuantity);
   setIfValue("maxQuantity", els.maxQuantity);
@@ -500,8 +748,8 @@ async function loadListings() {
 // ---------- Public entry ----------
 export async function initListingsPage({ readFromUrl = false } = {}) {
   // Bind DOM elements (listings.html)
+  await loadLabelMaps();
   els.form = document.getElementById("searchForm");
-  els.cropType = document.getElementById("cropType");
   els.region = document.getElementById("region");
   els.minQuantity = document.getElementById("minQuantity");
   els.maxQuantity = document.getElementById("maxQuantity");
@@ -523,6 +771,10 @@ if (resetBtn) {
   resetBtn.addEventListener("click", () => {
     // 1) Reset form fields
     els.form.reset();
+
+    selectedCropValues.clear();
+    updateCropLabelUI();
+    renderCropOptions("");
 
     // 2) Reset sorting explicitly (important)
     if (els.sortBy) els.sortBy.value = "newest";
@@ -554,6 +806,10 @@ if (resetBtn) {
     populateFiltersFromListings(listings);
 
     if (readFromUrl) readFiltersFromURL();
+
+    setupCropMultiSelect();
+    renderCropOptions("");
+    updateCropLabelUI();
 
     // initial render
     applyFilters();

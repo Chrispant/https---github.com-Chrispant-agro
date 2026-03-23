@@ -1,60 +1,804 @@
 {
-  "version": 1,
-  "updatedAt": "2026-02-08",
+  "version": 2,
+  "updatedAt": "2026-03-07",
   "groups": [
     {
       "groupValue": "vegetables",
       "groupLabel": "Λαχανικά",
+      "icon": "🥬",
       "items": [
-        { "value": "tomates", "label": "Ντομάτες" },
-        { "value": "patates", "label": "Πατάτες" },
-        { "value": "kremmydia", "label": "Κρεμμύδια" },
-        { "value": "lachana", "label": "Λάχανα" },
-        { "value": "agouria", "label": "Αγγούρια" },
-        { "value": "piperies", "label": "Πιπεριές" },
-        { "value": "karota", "label": "Καρότα" },
-        { "value": "salates", "label": "Σαλάτες / Μαρούλια" }
+        {
+          "value": "aggoyria",
+          "label": "Αγγούρια",
+          "icon": "🥒"
+        },
+        {
+          "value": "agkinares",
+          "label": "Αγκινάρες",
+          "icon": "🌿"
+        },
+        {
+          "value": "antidia",
+          "label": "Αντίδια",
+          "icon": "🥬"
+        },
+        {
+          "value": "arakas",
+          "label": "Αρακάς",
+          "icon": "🫛"
+        },
+        {
+          "value": "vlita",
+          "label": "Βλίτα",
+          "icon": "🥬"
+        },
+        {
+          "value": "karota",
+          "label": "Καρότα",
+          "icon": "🥕"
+        },
+        {
+          "value": "kolokythakia_anthoi",
+          "label": "Κολοκυθάκια ανθοί",
+          "icon": "🌼"
+        },
+        {
+          "value": "kolokytha",
+          "label": "Κολοκύθα",
+          "icon": "🎃"
+        },
+        {
+          "value": "kolokytha_voytyroy",
+          "label": "Κολοκύθα βουτύρου",
+          "icon": "🎃"
+        },
+        {
+          "value": "kolokytha_glykia",
+          "label": "Κολοκύθα γλυκιά",
+          "icon": "🎃"
+        },
+        {
+          "value": "kolokythia",
+          "label": "Κολοκύθια",
+          "icon": "🥒"
+        },
+        {
+          "value": "koynoypidi",
+          "label": "Κουνουπίδι",
+          "icon": "🥦"
+        },
+        {
+          "value": "koynoypidi_prasino",
+          "label": "Κουνουπίδι πράσινο",
+          "icon": "🥦"
+        },
+        {
+          "value": "kremmydakia_freska",
+          "label": "Κρεμμυδάκια φρέσκα",
+          "icon": "🧅"
+        },
+        {
+          "value": "kremmydia",
+          "label": "Κρεμμύδια",
+          "icon": "🧅"
+        },
+        {
+          "value": "lachana",
+          "label": "Λάχανα",
+          "icon": "🥬"
+        },
+        {
+          "value": "lachano_kokkino",
+          "label": "Λάχανο κόκκινο",
+          "icon": "🥬"
+        },
+        {
+          "value": "lachano_savoi",
+          "label": "Λάχανο σαβόι",
+          "icon": "🥬"
+        },
+        {
+          "value": "lachanakia_vryxellon",
+          "label": "Λαχανάκια Βρυξελλών",
+          "icon": "🥬"
+        },
+        {
+          "value": "manitaria",
+          "label": "Μανιτάρια",
+          "icon": "🍄"
+        },
+        {
+          "value": "manitaria_pleyrotoys",
+          "label": "Μανιτάρια πλευρώτους",
+          "icon": "🍄"
+        },
+        {
+          "value": "manitaria_sampinion",
+          "label": "Μανιτάρια σαμπινιόν",
+          "icon": "🍄"
+        },
+        {
+          "value": "maroylia",
+          "label": "Μαρούλια",
+          "icon": "🥬"
+        },
+        {
+          "value": "melitzanes",
+          "label": "Μελιτζάνες",
+          "icon": "🍆"
+        },
+        {
+          "value": "mpamies",
+          "label": "Μπάμιες",
+          "icon": "🌿"
+        },
+        {
+          "value": "ntomata_viomichaniki",
+          "label": "Ντομάτα βιομηχανική",
+          "icon": "🍅"
+        },
+        {
+          "value": "ntomates",
+          "label": "Ντομάτες",
+          "icon": "🍅"
+        },
+        {
+          "value": "ntomatinia",
+          "label": "Ντοματίνια",
+          "icon": "🍅"
+        },
+        {
+          "value": "pantzaria",
+          "label": "Παντζάρια",
+          "icon": "🥕"
+        },
+        {
+          "value": "patata_proimi",
+          "label": "Πατάτα πρώιμη",
+          "icon": "🥔"
+        },
+        {
+          "value": "patates",
+          "label": "Πατάτες",
+          "icon": "🥔"
+        },
+        {
+          "value": "piperia_kerato",
+          "label": "Πιπεριά κέρατο",
+          "icon": "🫑"
+        },
+        {
+          "value": "piperies",
+          "label": "Πιπεριές",
+          "icon": "🫑"
+        },
+        {
+          "value": "piperies_florinis",
+          "label": "Πιπεριές Φλωρίνης",
+          "icon": "🫑"
+        },
+        {
+          "value": "piperies_kayteres",
+          "label": "Πιπεριές καυτερές",
+          "icon": "🌶️"
+        },
+        {
+          "value": "prasa",
+          "label": "Πράσα",
+          "icon": "🥬"
+        },
+        {
+          "value": "radikia",
+          "label": "Ραδίκια",
+          "icon": "🥬"
+        },
+        {
+          "value": "rapanakia",
+          "label": "Ραπανάκια",
+          "icon": "🥕"
+        },
+        {
+          "value": "roka",
+          "label": "Ρόκα",
+          "icon": "🥬"
+        },
+        {
+          "value": "selino",
+          "label": "Σέλινο",
+          "icon": "🥬"
+        },
+        {
+          "value": "selino_riza",
+          "label": "Σέλινο ρίζα",
+          "icon": "🥬"
+        },
+        {
+          "value": "salates_mix",
+          "label": "Σαλάτες mix",
+          "icon": "🥬"
+        },
+        {
+          "value": "skorda",
+          "label": "Σκόρδα",
+          "icon": "🧄"
+        },
+        {
+          "value": "skorda_freska",
+          "label": "Σκόρδα φρέσκα",
+          "icon": "🧄"
+        },
+        {
+          "value": "spanaki",
+          "label": "Σπανάκι",
+          "icon": "🥬"
+        },
+        {
+          "value": "sparaggia",
+          "label": "Σπαράγγια",
+          "icon": "🌿"
+        },
+        {
+          "value": "sparaggia_leyka",
+          "label": "Σπαράγγια λευκά",
+          "icon": "🌿"
+        },
+        {
+          "value": "fasolakia",
+          "label": "Φασολάκια",
+          "icon": "🫛"
+        }
       ]
     },
     {
       "groupValue": "fruits",
       "groupLabel": "Φρούτα",
+      "icon": "🍎",
       "items": [
-        { "value": "mila", "label": "Μήλα" },
-        { "value": "portokalia", "label": "Πορτοκάλια" },
-        { "value": "rodakina", "label": "Ροδάκινα" },
-        { "value": "stafyli", "label": "Σταφύλια" },
-        { "value": "kerasia", "label": "Κεράσια" },
-        { "value": "akridia", "label": "Ακτινίδια" }
+        {
+          "value": "avokanto",
+          "label": "Αβοκάντο",
+          "icon": "🥑"
+        },
+        {
+          "value": "aktinidia",
+          "label": "Ακτινίδια",
+          "icon": "🥝"
+        },
+        {
+          "value": "aronia",
+          "label": "Αρώνια",
+          "icon": "🫐"
+        },
+        {
+          "value": "achladia",
+          "label": "Αχλάδια",
+          "icon": "🍐"
+        },
+        {
+          "value": "vatomoyra",
+          "label": "Βατόμουρα",
+          "icon": "🫐"
+        },
+        {
+          "value": "verikoka",
+          "label": "Βερίκοκα",
+          "icon": "🍑"
+        },
+        {
+          "value": "gkreipfroyt",
+          "label": "Γκρέιπφρουτ",
+          "icon": "🍊"
+        },
+        {
+          "value": "gkotzi_mperi",
+          "label": "Γκότζι μπέρι",
+          "icon": "🫐"
+        },
+        {
+          "value": "damaskina",
+          "label": "Δαμάσκηνα",
+          "icon": "🍑"
+        },
+        {
+          "value": "karpoyzia",
+          "label": "Καρπούζια",
+          "icon": "🍉"
+        },
+        {
+          "value": "kerasia",
+          "label": "Κεράσια",
+          "icon": "🍒"
+        },
+        {
+          "value": "kydonia",
+          "label": "Κυδώνια",
+          "icon": "🍏"
+        },
+        {
+          "value": "laim",
+          "label": "Λάιμ",
+          "icon": "🍋"
+        },
+        {
+          "value": "litsi",
+          "label": "Λίτσι",
+          "icon": "🍒"
+        },
+        {
+          "value": "lemonia",
+          "label": "Λεμόνια",
+          "icon": "🍋"
+        },
+        {
+          "value": "mangko",
+          "label": "Μάνγκο",
+          "icon": "🥭"
+        },
+        {
+          "value": "mila",
+          "label": "Μήλα",
+          "icon": "🍎"
+        },
+        {
+          "value": "mantarinia",
+          "label": "Μανταρίνια",
+          "icon": "🍊"
+        },
+        {
+          "value": "moysmoyla",
+          "label": "Μούσμουλα",
+          "icon": "🍑"
+        },
+        {
+          "value": "mpananes",
+          "label": "Μπανάνες",
+          "icon": "🍌"
+        },
+        {
+          "value": "myrtila",
+          "label": "Μύρτιλα",
+          "icon": "🫐"
+        },
+        {
+          "value": "nektarinia",
+          "label": "Νεκταρίνια",
+          "icon": "🍑"
+        },
+        {
+          "value": "peponi_cantaloupe",
+          "label": "Πεπόνι cantaloupe",
+          "icon": "🍈"
+        },
+        {
+          "value": "peponi_kitrino",
+          "label": "Πεπόνι κίτρινο",
+          "icon": "🍈"
+        },
+        {
+          "value": "peponia",
+          "label": "Πεπόνια",
+          "icon": "🍈"
+        },
+        {
+          "value": "portokalia",
+          "label": "Πορτοκάλια",
+          "icon": "🍊"
+        },
+        {
+          "value": "rodakina",
+          "label": "Ροδάκινα",
+          "icon": "🍑"
+        },
+        {
+          "value": "rodia",
+          "label": "Ρόδια",
+          "icon": "🍎"
+        },
+        {
+          "value": "smeoyra",
+          "label": "Σμέουρα",
+          "icon": "🍓"
+        },
+        {
+          "value": "stafida",
+          "label": "Σταφίδα",
+          "icon": "🍇"
+        },
+        {
+          "value": "stafylia",
+          "label": "Σταφύλια",
+          "icon": "🍇"
+        },
+        {
+          "value": "syka",
+          "label": "Σύκα",
+          "icon": "🫐"
+        },
+        {
+          "value": "fraoyles",
+          "label": "Φράουλες",
+          "icon": "🍓"
+        },
+        {
+          "value": "fragkosyka",
+          "label": "Φραγκόσυκα",
+          "icon": "🍐"
+        }
       ]
     },
     {
-      "groupValue": "grains-legumes",
-      "groupLabel": "Δημητριακά & Όσπρια",
+      "groupValue": "grains",
+      "groupLabel": "Σιτηρά",
+      "icon": "🌾",
       "items": [
-        { "value": "sitari", "label": "Σιτάρι" },
-        { "value": "krithari", "label": "Κριθάρι" },
-        { "value": "kalamaki", "label": "Καλαμπόκι" },
-        { "value": "ryzi", "label": "Ρύζι" },
-        { "value": "fasolia", "label": "Φασόλια" },
-        { "value": "fakes", "label": "Φακές" }
+        {
+          "value": "vromi",
+          "label": "Βρώμη",
+          "icon": "🌾"
+        },
+        {
+          "value": "kalampoki",
+          "label": "Καλαμπόκι",
+          "icon": "🌽"
+        },
+        {
+          "value": "kechri",
+          "label": "Κεχρί",
+          "icon": "🌾"
+        },
+        {
+          "value": "krithari",
+          "label": "Κριθάρι",
+          "icon": "🌾"
+        },
+        {
+          "value": "krithari_ktinotrofiko",
+          "label": "Κριθάρι κτηνοτροφικό",
+          "icon": "🌾"
+        },
+        {
+          "value": "ryzi",
+          "label": "Ρύζι",
+          "icon": "🌾"
+        },
+        {
+          "value": "sikali",
+          "label": "Σίκαλη",
+          "icon": "🌾"
+        },
+        {
+          "value": "sitari_malako",
+          "label": "Σιτάρι μαλακό",
+          "icon": "🌾"
+        },
+        {
+          "value": "sitari_skliro",
+          "label": "Σιτάρι σκληρό",
+          "icon": "🌾"
+        },
+        {
+          "value": "sorgo",
+          "label": "Σόργο",
+          "icon": "🌾"
+        },
+        {
+          "value": "sorgo_ktinotrofiko",
+          "label": "Σόργο κτηνοτροφικό",
+          "icon": "🌾"
+        },
+        {
+          "value": "tritikale",
+          "label": "Τριτικάλε",
+          "icon": "🌾"
+        }
       ]
     },
     {
-      "groupValue": "olive-oil",
-      "groupLabel": "Ελιές & Ελαιόλαδο",
+      "groupValue": "legumes",
+      "groupLabel": "Όσπρια",
+      "icon": "🫘",
       "items": [
-        { "value": "elies", "label": "Ελιές" },
-        { "value": "elaiolado", "label": "Ελαιόλαδο" }
+        {
+          "value": "gigantes_fasolia",
+          "label": "Γίγαντες φασόλια",
+          "icon": "🫘"
+        },
+        {
+          "value": "koykia",
+          "label": "Κουκιά",
+          "icon": "🫘"
+        },
+        {
+          "value": "lathoyria",
+          "label": "Λαθούρια",
+          "icon": "🫘"
+        },
+        {
+          "value": "loypina",
+          "label": "Λούπινα",
+          "icon": "🫘"
+        },
+        {
+          "value": "revythia",
+          "label": "Ρεβύθια",
+          "icon": "🫘"
+        },
+        {
+          "value": "fakes",
+          "label": "Φακές",
+          "icon": "🫘"
+        },
+        {
+          "value": "fasolia",
+          "label": "Φασόλια",
+          "icon": "🫘"
+        },
+        {
+          "value": "fasolia_mayra",
+          "label": "Φασόλια μαύρα",
+          "icon": "🫘"
+        },
+        {
+          "value": "fasolia_plake",
+          "label": "Φασόλια πλακέ",
+          "icon": "🫘"
+        }
       ]
     },
     {
       "groupValue": "nuts",
       "groupLabel": "Ξηροί καρποί",
+      "icon": "🌰",
       "items": [
-        { "value": "amygdala", "label": "Αμύγδαλα" },
-        { "value": "karidia", "label": "Καρύδια" },
-        { "value": "fystikia", "label": "Φιστίκια" }
+        {
+          "value": "amygdala",
+          "label": "Αμύγδαλα",
+          "icon": "🌰"
+        },
+        {
+          "value": "kastana",
+          "label": "Κάστανα",
+          "icon": "🌰"
+        },
+        {
+          "value": "karydia",
+          "label": "Καρύδια",
+          "icon": "🌰"
+        },
+        {
+          "value": "fistiki_aiginis",
+          "label": "Φιστίκι Αιγίνης",
+          "icon": "🌰"
+        },
+        {
+          "value": "fistikia",
+          "label": "Φιστίκια",
+          "icon": "🌰"
+        },
+        {
+          "value": "foyntoykia",
+          "label": "Φουντούκια",
+          "icon": "🌰"
+        }
+      ]
+    },
+    {
+      "groupValue": "herbs",
+      "groupLabel": "Αρωματικά φυτά",
+      "icon": "🌿",
+      "items": [
+        {
+          "value": "anithos",
+          "label": "Άνηθος",
+          "icon": "🌿"
+        },
+        {
+          "value": "vasilikos",
+          "label": "Βασιλικός",
+          "icon": "🌿"
+        },
+        {
+          "value": "dafni",
+          "label": "Δάφνη",
+          "icon": "🌿"
+        },
+        {
+          "value": "dentrolivano",
+          "label": "Δεντρολίβανο",
+          "icon": "🌿"
+        },
+        {
+          "value": "dyosmos",
+          "label": "Δυόσμος",
+          "icon": "🌿"
+        },
+        {
+          "value": "throympi",
+          "label": "Θρούμπι",
+          "icon": "🌿"
+        },
+        {
+          "value": "thymari",
+          "label": "Θυμάρι",
+          "icon": "🌿"
+        },
+        {
+          "value": "levanta",
+          "label": "Λεβάντα",
+          "icon": "🌸"
+        },
+        {
+          "value": "loyiza",
+          "label": "Λουΐζα",
+          "icon": "🌿"
+        },
+        {
+          "value": "marathos",
+          "label": "Μάραθος",
+          "icon": "🌿"
+        },
+        {
+          "value": "menta",
+          "label": "Μέντα",
+          "icon": "🌿"
+        },
+        {
+          "value": "mantzoyrana",
+          "label": "Μαντζουράνα",
+          "icon": "🌿"
+        },
+        {
+          "value": "maintanos",
+          "label": "Μαϊντανός",
+          "icon": "🌿"
+        },
+        {
+          "value": "melissochorto",
+          "label": "Μελισσόχορτο",
+          "icon": "🌿"
+        },
+        {
+          "value": "rigani",
+          "label": "Ρίγανη",
+          "icon": "🌿"
+        },
+        {
+          "value": "tsai_toy_voynoy",
+          "label": "Τσάι του βουνού",
+          "icon": "🌿"
+        },
+        {
+          "value": "faskomilo",
+          "label": "Φασκόμηλο",
+          "icon": "🌿"
+        },
+        {
+          "value": "chamomili",
+          "label": "Χαμομήλι",
+          "icon": "🌼"
+        }
+      ]
+    },
+    {
+      "groupValue": "other",
+      "groupLabel": "Άλλες καλλιέργειες",
+      "icon": "🌱",
+      "items": [
+        {
+          "value": "ampelia",
+          "label": "Αμπέλια",
+          "icon": "🍇"
+        },
+        {
+          "value": "aravositos_ensirosis",
+          "label": "Αραβόσιτος ενσίρωσης",
+          "icon": "🌽"
+        },
+        {
+          "value": "vikos",
+          "label": "Βίκος",
+          "icon": "🌿"
+        },
+        {
+          "value": "vamvaki",
+          "label": "Βαμβάκι",
+          "icon": "🌱"
+        },
+        {
+          "value": "elaiokramvi",
+          "label": "Ελαιοκράμβη",
+          "icon": "🌼"
+        },
+        {
+          "value": "elies",
+          "label": "Ελιές",
+          "icon": "🫒"
+        },
+        {
+          "value": "zacharoteytla",
+          "label": "Ζαχαρότευτλα",
+          "icon": "🥕"
+        },
+        {
+          "value": "ilianthos",
+          "label": "Ηλίανθος",
+          "icon": "🌻"
+        },
+        {
+          "value": "kalampoki_ensirosis",
+          "label": "Καλαμπόκι ενσίρωσης",
+          "icon": "🌽"
+        },
+        {
+          "value": "kapnos",
+          "label": "Καπνός",
+          "icon": "🌱"
+        },
+        {
+          "value": "kinoa",
+          "label": "Κινόα",
+          "icon": "🌾"
+        },
+        {
+          "value": "krokos_kozanis",
+          "label": "Κρόκος Κοζάνης",
+          "icon": "🌸"
+        },
+        {
+          "value": "linari",
+          "label": "Λινάρι",
+          "icon": "🌱"
+        },
+        {
+          "value": "masticha_chioy",
+          "label": "Μαστίχα Χίου",
+          "icon": "🌿"
+        },
+        {
+          "value": "midiki",
+          "label": "Μηδική",
+          "icon": "🌿"
+        },
+        {
+          "value": "spiroylina",
+          "label": "Σπιρουλίνα",
+          "icon": "🌱"
+        },
+        {
+          "value": "stevia",
+          "label": "Στέβια",
+          "icon": "🌿"
+        },
+        {
+          "value": "sogia",
+          "label": "Σόγια",
+          "icon": "🌱"
+        },
+        {
+          "value": "trifylli",
+          "label": "Τριφύλλι",
+          "icon": "🌿"
+        },
+        {
+          "value": "troyfa",
+          "label": "Τρούφα",
+          "icon": "🍄"
+        },
+        {
+          "value": "tsoyknida",
+          "label": "Τσουκνίδα",
+          "icon": "🌿"
+        },
+        {
+          "value": "festoyka",
+          "label": "Φεστούκα",
+          "icon": "🌿"
+        },
+        {
+          "value": "charoypia",
+          "label": "Χαρουπιά",
+          "icon": "🌳"
+        }
       ]
     }
   ]

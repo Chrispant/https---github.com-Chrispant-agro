@@ -1,0 +1,51 @@
+{
+  "lachana": [
+    { "value": "strandon", "label": "Strandon", "type": "hybrid" },
+    { "value": "kilaton", "label": "Kilaton F1", "type": "hybrid" },
+    { "value": "bronco", "label": "Bronco F1", "type": "hybrid" }
+  ],
+
+  "ntomates": [
+    { "value": "belladonna", "label": "Belladonna F1", "type": "hybrid" },
+    { "value": "marmande", "label": "Marmande", "type": "open" },
+    { "value": "cherry", "label": "Cherry", "type": "type" }
+  ],
+
+  "patates": [
+    { "value": "spunta", "label": "Spunta" },
+    { "value": "agria", "label": "Agria" },
+    { "value": "desiree", "label": "Desiree" }
+  ],
+
+  "elies": [
+    { "value": "koroneiki", "label": "Κορωνέικη" },
+    { "value": "kalamon", "label": "Καλαμών" },
+    { "value": "amfissis", "label": "Αμφίσσης" },
+    { "value": "halkidikis", "label": "Χαλκιδικής" }
+  ],
+
+  "stafyli": [
+    { "value": "sultana", "label": "Σουλτανίνα" },
+    { "value": "rodina", "label": "Ροδίνα" },
+    { "value": "agiorgitiko", "label": "Αγιωργίτικο", "category": "wine" },
+    { "value": "xinomavro", "label": "Ξινόμαυρο", "category": "wine" }
+  ],
+
+  "portokalia": [
+    { "value": "valencia", "label": "Valencia" },
+    { "value": "navel", "label": "Navel" },
+    { "value": "merlin", "label": "Merlin" }
+  ],
+
+  "kalampoki": [
+    { "value": "dent", "label": "Dent", "category": "feed" },
+    { "value": "flint", "label": "Flint", "category": "feed" },
+    { "value": "sweet", "label": "Γλυκό καλαμπόκι", "category": "human" }
+  ],
+
+  "vambaki": [
+    { "value": "402", "label": "402" },
+    { "value": "elia", "label": "ELIA" },
+    { "value": "celia", "label": "CELIA" }
+  ]
+}

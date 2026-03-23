@@ -1,6 +1,14 @@
 // js/listing.js
 // Single listing page logic: listing.html?id=...
 
+
+// ---- Label maps (crop, region, variety) ----
+
+let CROPS_LABELS = null;
+let REGIONS_LABELS = null;
+let VARIETIES_BY_CROP = null;
+
+
 function escapeHtml(str) {
   return String(str ?? "")
     .replaceAll("&", "&amp;")
@@ -31,13 +39,58 @@ function hideError() {
 
 function formatPrice(l) {
   if (l.pricePerKg === null || l.pricePerKg === undefined) {
-    return l.priceNote ? l.priceNote : "Price not specified";
+    return l.priceNote ? l.priceNote : "Ζητήστε τιμή";
   }
   const n = Number(l.pricePerKg);
-  if (Number.isNaN(n)) return "Price not specified";
+  if (Number.isNaN(n)) return "Ζητήστε τιμή";
   return `€${n.toFixed(2)} / kg`;
 }
  //helpers 
+
+ function buildValueToLabelMapFromGroups(json) {
+  const map = new Map();
+  const groups = json?.groups || [];
+  for (const g of groups) {
+    const items = g?.items || [];
+    for (const it of items) {
+      if (it?.value && it?.label) map.set(it.value, it.label);
+    }
+  }
+  return map;
+}
+
+async function loadLabelMaps() {
+  if (CROPS_LABELS && REGIONS_LABELS && VARIETIES_BY_CROP) return;
+
+  const [cropsJson, regionsJson, varietiesJson] = await Promise.all([
+    fetch("data/crops.json").then(r => r.json()),
+    fetch("data/regions.json").then(r => r.json()),
+    fetch("data/varietyByCrop.json").then(r => r.json()).catch(() => ({}))
+  ]);
+
+  CROPS_LABELS = buildValueToLabelMapFromGroups(cropsJson);
+  REGIONS_LABELS = buildValueToLabelMapFromGroups(regionsJson);
+  VARIETIES_BY_CROP = varietiesJson || {};
+}
+
+function resolveCropLabel(v) {
+  return CROPS_LABELS?.get(v) || v || "";
+}
+
+function resolveRegionLabel(v) {
+  return REGIONS_LABELS?.get(v) || v || "";
+}
+
+function resolveVarietyLabel(cropValue, varietyValue) {
+  if (!varietyValue) return "";
+  const arr = VARIETIES_BY_CROP?.[cropValue];
+  const found = Array.isArray(arr)
+    ? arr.find(x => x.value === varietyValue)
+    : null;
+  return found?.label || varietyValue;
+}
+
+
 function openModal(modal) {
   if (!modal) return;
   modal.classList.add("is-open");
@@ -67,6 +120,46 @@ function getIdFromUrl() {
   } catch (e) {
     return "";
   }
+}
+
+function formatDateGR(dateStr) {
+  if (!dateStr) return "—";
+
+  const parts = dateStr.split("-");
+  if (parts.length !== 3) return dateStr;
+
+  const [year, month, day] = parts;
+
+  return `${day}-${month}-${year}`;
+}
+
+function formatHarvestMonth(ym) {
+  if (!ym || !String(ym).includes("-")) return "";
+  const [y, m] = String(ym).split("-");
+  if (!y || !m) return "";
+  return `${m.padStart(2, "0")}-${y}`;
+}
+
+function buildHarvestText(start, end) {
+  const s = formatHarvestMonth(start);
+  const e = formatHarvestMonth(end);
+
+  if (s && e) {
+    if (s === e) {
+      return {
+        title: "Συγκομιδή",
+        value: s,
+        note: "Η συγκομιδή πραγματοποιείται στο διάστημα του μήνα αυτού."
+      };
+    }
+
+    return {
+      title: "Περίοδος συγκομιδής",
+      value: `${s} έως ${e}`,
+      note: "Η διαθεσιμότητα μπορεί να διαφέρει μέσα στην περίοδο αυτή."
+    };
+  }
+  return null;
 }
 
 
@@ -210,6 +303,7 @@ function renderGallery(images) {
 }
 
 async function loadListing() {
+  await loadLabelMaps();
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
 
@@ -243,20 +337,62 @@ async function loadListing() {
 
   const l = payload.listing;
 
+
+
   // Breadcrumb current label + title
   const crumbCurrent = document.getElementById("crumbCurrent");
-  const titleText = `${l.cropType} • ${l.region}`;
+  const cropLabel = resolveCropLabel(l.cropType);
+  const regionLabel = resolveRegionLabel(l.region);
+  const varietyLabel = resolveVarietyLabel(l.cropType, l.variety);
+  const varietyRow = document.getElementById("listingVarietyRow");
+
+if (varietyLabel) {
+  setText("listingVariety", varietyLabel);
+  if (varietyRow) varietyRow.style.display = "block";
+}
+
+  const titleText = `${cropLabel}`;
   if (crumbCurrent) crumbCurrent.textContent = titleText;
   document.title = titleText;
 
   // Fill UI
   setText("listingTitle", titleText);
-  setText("listingRegion", l.region);
-  setText("listingHarvest", `${l.harvestStart ?? "?"} → ${l.harvestEnd ?? "?"}`);
+  setText("listingRegion", regionLabel);
+
+
+
   setText("listingQty", l.quantityTons !== undefined ? `${l.quantityTons} tons` : "—");
   setText("listingPrice", formatPrice(l));
-  setText("listingDate", l.createdAt ?? "—");
+  setText("listingDate", formatDateGR(l.createdAt) ?? "—");
   setText("sellerName", l.seller?.name ?? "—");
+
+  setText("listingDescriptionFull", l.description || "Δεν υπάρχει περιγραφή.");
+  setText("listingDetailCrop", cropLabel || "—");
+  setText("listingDetailRegion", regionLabel || "—");
+  setText("listingDetailDate", formatDateGR(l.createdAt));
+
+    // Harvest box
+  const harvestBox = document.getElementById("harvestBox");
+  const harvestLabelEl = harvestBox?.querySelector(".harvest-box-label");
+  const harvestValueEl = document.getElementById("listingHarvestPretty");
+  const harvestNoteEl = document.getElementById("listingHarvestNote");
+
+  const harvestInfo = buildHarvestText(l.harvestStart, l.harvestEnd);
+
+  if (harvestInfo && harvestBox && harvestLabelEl && harvestValueEl && harvestNoteEl) {
+    harvestLabelEl.textContent = harvestInfo.title;
+    harvestValueEl.textContent = harvestInfo.value;
+    harvestNoteEl.textContent = harvestInfo.note;
+    harvestBox.hidden = false;
+  } else if (harvestBox) {
+    harvestBox.hidden = true;
+  }
+
+  const detailVarietyRow = document.getElementById("listingDetailVarietyRow");
+  if (varietyLabel) {
+    setText("listingDetailVariety", varietyLabel);
+    if (detailVarietyRow) detailVarietyRow.style.display = "list-item";
+  }
 
   // Images
   const images = Array.isArray(l.images) && l.images.length ? l.images : (l.image ? [l.image] : []);
@@ -279,7 +415,7 @@ async function loadListing() {
   const email = document.getElementById("sellerEmail");
   if (email) {
     if (l.seller?.email) {
-      email.href = `mailto:${l.seller.email}?subject=${encodeURIComponent(`Bulk inquiry: ${l.cropType}`)}`;
+      email.href = `mailto:${l.seller.email}?subject=${encodeURIComponent(`Bulk inquiry: ${cropLabel}`)}`;
     } else {
       email.style.display = "none";
     }
