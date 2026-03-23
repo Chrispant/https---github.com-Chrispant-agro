@@ -34,6 +34,7 @@ $sellerEmail  = trim($_POST["sellerEmail"] ?? "");
 $description  = trim($_POST["description"] ?? "");
 
 // ---- Validate minimal ----
+<<<<<<< HEAD
 if ($cropType === "") bad("Απαιτείται Καλλιέργεια");
 if ($variety === "") $variety = null;
 if ($region === "") bad("Απαιτείται Περιοχή");
@@ -47,6 +48,12 @@ if (!preg_match('/^\d{4}-\d{2}$/', $harvestStart)) bad("harvestStart must be YYY
 if (!preg_match('/^\d{4}-\d{2}$/', $harvestEnd)) bad("harvestEnd must be YYYY-MM");
 
 if ($harvestEnd < $harvestStart) bad("Το Τέλος Συγκομιδής πρέπει να είναι ίδιο ή μετά του Αρχή Συγκομιδής");
+=======
+if ($cropType === "") bad("cropType is required");
+if ($variety === "") $variety = null;
+if ($region === "") bad("region is required");
+if ($sellerName === "") bad("sellerName is required");
+>>>>>>> 4177bcefb36228fae100910354ebc6806f0c1f2b
 
 if ($quantityTons === "" || !is_numeric($quantityTons) || floatval($quantityTons) <= 0) {
   bad("Η ποσότητα τόνων πρέπει να είναι Θετικός αριθμός");

@@ -351,7 +351,11 @@ if (varietyLabel) {
   if (varietyRow) varietyRow.style.display = "block";
 }
 
+<<<<<<< HEAD
   const titleText = `${cropLabel}`;
+=======
+  const titleText = `${cropLabel} • ${regionLabel}`;
+>>>>>>> 4177bcefb36228fae100910354ebc6806f0c1f2b
   if (crumbCurrent) crumbCurrent.textContent = titleText;
   document.title = titleText;
 
@@ -359,8 +363,20 @@ if (varietyLabel) {
   setText("listingTitle", titleText);
   setText("listingRegion", regionLabel);
 
+<<<<<<< HEAD
 
 
+=======
+  function formatHarvestMonth(ym) {
+    if (!ym || !String(ym).includes("-")) return ym || "?";
+    const [y, m] = String(ym).split("-");
+    return `${m}-${y}`;
+  }
+  setText(
+  "listingHarvest",
+  `${formatHarvestMonth(l.harvestStart)} → ${formatHarvestMonth(l.harvestEnd)}`
+);
+>>>>>>> 4177bcefb36228fae100910354ebc6806f0c1f2b
   setText("listingQty", l.quantityTons !== undefined ? `${l.quantityTons} tons` : "—");
   setText("listingPrice", formatPrice(l));
   setText("listingDate", formatDateGR(l.createdAt) ?? "—");
