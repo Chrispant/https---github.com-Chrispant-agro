@@ -10,11 +10,8 @@ let lastFiltered = []; // keeps current filtered results for paging
 let CROPS_LABELS = null;
 let REGIONS_LABELS = null;
 let VARIETIES_BY_CROP = null
-<<<<<<< HEAD
 let selectedCropValues = new Set();
 let CROPS_GROUPS = [];
-=======
->>>>>>> 4177bcefb36228fae100910354ebc6806f0c1f2b
 
 
 const els = {
@@ -52,10 +49,6 @@ function buildValueToLabelMapFromGroups(json) {
 }
 
 async function loadLabelMaps() {
-<<<<<<< HEAD
-
-=======
->>>>>>> 4177bcefb36228fae100910354ebc6806f0c1f2b
   if (CROPS_LABELS && REGIONS_LABELS && VARIETIES_BY_CROP) return;
 
   const [cropsJson, regionsJson, varietiesJson] = await Promise.all([
@@ -67,13 +60,10 @@ async function loadLabelMaps() {
   CROPS_LABELS = buildValueToLabelMapFromGroups(cropsJson);
   REGIONS_LABELS = buildValueToLabelMapFromGroups(regionsJson);
   VARIETIES_BY_CROP = varietiesJson || {};
-<<<<<<< HEAD
   CROPS_GROUPS = cropsJson?.groups || [];
 
   console.log("CROPS_GROUPS", CROPS_GROUPS);
 console.log("CROPS_LABELS size", CROPS_LABELS?.size);
-=======
->>>>>>> 4177bcefb36228fae100910354ebc6806f0c1f2b
 }
 
 function resolveCropLabel(v) {
@@ -302,19 +292,6 @@ function populateFiltersFromListings(items) {
   const cropValues = Array.from(new Set(items.map(l => l.cropType).filter(Boolean))).sort();
   const regionValues = Array.from(new Set(items.map(l => l.region).filter(Boolean))).sort();
 
-<<<<<<< HEAD
-=======
-  // crop select: value = slug, text = label
-  if (els.cropType) {
-    els.cropType.innerHTML = `<option value="">Όλες οι καλλιέργιες</option>`;
-    cropValues.forEach((v) => {
-      const opt = document.createElement("option");
-      opt.value = v;
-      opt.textContent = resolveCropLabel(v); // <-- label
-      els.cropType.appendChild(opt);
-    });
-  }
->>>>>>> 4177bcefb36228fae100910354ebc6806f0c1f2b
 
   // region select: value = slug, text = label
   if (els.region) {
@@ -329,11 +306,8 @@ function populateFiltersFromListings(items) {
 }
 
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 4177bcefb36228fae100910354ebc6806f0c1f2b
 // ---------- Sorting ----------
 function sortListings(items) {
   const mode = els.sortBy?.value || "newest";
@@ -551,31 +525,11 @@ function renderListings(items) {
               <div class="listing-row-date">Δημοσίευση: ${escapeHtml(formatDateGR(l.createdAt))}</div>
             </div>
 
-<<<<<<< HEAD
             <h3 class="listing-row-title">${escapeHtml(cropLabel || "Αγγελία")}</h3>
 
             <div class="listing-row-meta">
               <div><strong>Ποσότητα:</strong> ${escapeHtml(qty)}</div>
               <div><strong>Συγκομιδή:</strong> ${escapeHtml(harvest)}</div>
-=======
-            <div class="listing-body">
-              <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
-                  <span class="badge">🌿 ${escapeHtml(cropLabel || "Καλλιέργεια")}</span>
-                  <span class="badge badge-muted">📍 ${escapeHtml(regionLabel || "Περιοχή")}</span>
-                  ${varietyLabel ? `<span class="badge badge-muted">🏷️ ${escapeHtml(varietyLabel)}</span>` : ""}
-              </div>
-              <h3 class="listing-title">${escapeHtml(title)}</h3>
-
-              <div class="listing-meta">
-                <div><strong>Ποσότητα:</strong> ${escapeHtml(qty)}</div>
-                <div><strong>Συγκομιδή:</strong> ${escapeHtml(harvest)}</div>
-                <div><strong>Τιμή:</strong> ${escapeHtml(price)}</div>
-              </div>
-
-              <div class="listing-seller">
-                <div><strong>Πωλητής:</strong> ${escapeHtml(l.seller?.name || "—")}</div>
-              </div>
->>>>>>> 4177bcefb36228fae100910354ebc6806f0c1f2b
             </div>
 
             <p class="listing-row-desc">

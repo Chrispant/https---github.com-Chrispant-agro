@@ -27,13 +27,10 @@
           "label": "Ν. Καστοριάς"
         },
         {
-<<<<<<< HEAD
           "value": "kavalas",
           "label": "Ν. Καβάλας"
         },
         {
-=======
->>>>>>> 4177bcefb36228fae100910354ebc6806f0c1f2b
           "value": "kilkis",
           "label": "Ν. Κιλκίς"
         },
@@ -61,10 +58,7 @@
           "value": "chalkidikis",
           "label": "Ν. Χαλκιδικής"
         }
-<<<<<<< HEAD
     
-=======
->>>>>>> 4177bcefb36228fae100910354ebc6806f0c1f2b
       ]
     },
     {
@@ -124,13 +118,6 @@
           "label": "Ν. Μαγνησίας"
         },
         {
-<<<<<<< HEAD
-=======
-          "value": "sporadon",
-          "label": "Ν. Σποράδων"
-        },
-        {
->>>>>>> 4177bcefb36228fae100910354ebc6806f0c1f2b
           "value": "trikalon",
           "label": "Ν. Τρικάλων"
         }
@@ -145,13 +132,10 @@
           "label": "Ν. Αιτωλοακαρνανίας"
         },
         {
-<<<<<<< HEAD
           "value": "attikis",
           "label": "Ν. Αττικής"
         },
         {
-=======
->>>>>>> 4177bcefb36228fae100910354ebc6806f0c1f2b
           "value": "voiotias",
           "label": "Ν. Βοιωτίας"
         },
@@ -208,47 +192,6 @@
       ]
     },
     {
-<<<<<<< HEAD
-=======
-      "groupValue": "αττική",
-      "groupLabel": "Αττική",
-      "items": [
-        {
-          "value": "attikis-anatolikis",
-          "label": "Ν. Ανατολικής Αττικής"
-        },
-        {
-          "value": "attikis-voreiou-tomea-athinon",
-          "label": "Ν. Βορείου Τομέα Αθηνών"
-        },
-        {
-          "value": "attikis-dytikis",
-          "label": "Ν. Δυτικής Αττικής"
-        },
-        {
-          "value": "attikis-dytikou-tomea-athinon",
-          "label": "Ν. Δυτικού Τομέα Αθηνών"
-        },
-        {
-          "value": "attikis-kentrikou-tomea-athinon",
-          "label": "Ν. Κεντρικού Τομέα Αθηνών"
-        },
-        {
-          "value": "nisoi-attikis",
-          "label": "Ν. Νήσων"
-        },
-        {
-          "value": "attikis-notiou-tomea-athinon",
-          "label": "Ν. Νοτίου Τομέα Αθηνών"
-        },
-        {
-          "value": "peiraios",
-          "label": "Ν. Πειραιώς"
-        }
-      ]
-    },
-    {
->>>>>>> 4177bcefb36228fae100910354ebc6806f0c1f2b
       "groupValue": "κρήτη",
       "groupLabel": "Κρήτη",
       "items": [
@@ -275,87 +218,19 @@
       "groupLabel": "Νησιά Αιγαίου",
       "items": [
         {
-<<<<<<< HEAD
           "value": "dodekanisou",
           "label": "Ν. Δωδεκανήσου"
         },
       
-=======
-          "value": "androu",
-          "label": "Ν. Άνδρου"
-        },
-        {
-          "value": "thiras",
-          "label": "Ν. Θήρας"
-        },
-        {
-          "value": "ikarias",
-          "label": "Ν. Ικαρίας"
-        },
-        {
-          "value": "kea-kythnou",
-          "label": "Ν. Κέας-Κύθνου"
-        },
-        {
-          "value": "kalymnou",
-          "label": "Ν. Καλύμνου"
-        },
-        {
-          "value": "karpathou-kasou",
-          "label": "Ν. Καρπάθου-Κάσου"
-        },
-        {
-          "value": "ko",
-          "label": "Ν. Κω"
-        },
->>>>>>> 4177bcefb36228fae100910354ebc6806f0c1f2b
         {
           "value": "lesvou",
           "label": "Ν. Λέσβου"
         },
         {
-<<<<<<< HEAD
-=======
-          "value": "limnou",
-          "label": "Ν. Λήμνου"
-        },
-        {
-          "value": "milos",
-          "label": "Ν. Μήλου"
-        },
-        {
-          "value": "mykonou",
-          "label": "Ν. Μυκόνου"
-        },
-        {
-          "value": "naxou",
-          "label": "Ν. Νάξου"
-        },
-        {
-          "value": "parou",
-          "label": "Ν. Πάρου"
-        },
-        {
-          "value": "rodou",
-          "label": "Ν. Ρόδου"
-        },
-        {
->>>>>>> 4177bcefb36228fae100910354ebc6806f0c1f2b
           "value": "samou",
           "label": "Ν. Σάμου"
         },
         {
-<<<<<<< HEAD
-=======
-          "value": "syrou",
-          "label": "Ν. Σύρου"
-        },
-        {
-          "value": "tinou",
-          "label": "Ν. Τήνου"
-        },
-        {
->>>>>>> 4177bcefb36228fae100910354ebc6806f0c1f2b
           "value": "chiou",
           "label": "Ν. Χίου"
         }
@@ -370,13 +245,6 @@
           "label": "Ν. Ζακύνθου"
         },
         {
-<<<<<<< HEAD
-=======
-          "value": "ithakis",
-          "label": "Ν. Ιθάκης"
-        },
-        {
->>>>>>> 4177bcefb36228fae100910354ebc6806f0c1f2b
           "value": "kerkyras",
           "label": "Ν. Κέρκυρας"
         },

@@ -409,20 +409,11 @@ function validateOne(name) {
     if (n > 100000) return "Η ποσότητα φαίνεται υπερβολικά μεγάλη. Έλεγξέ την.";
   }
 
-<<<<<<< HEAD
   if (name === "pricePerKg") {
     if (isEmpty(v)) return "";
     const n = Number(v);
     if (Number.isNaN(n)) return "Η τιμή πρέπει να είναι αριθμός.";
     if (n < 0) return "Η τιμή πρέπει να είναι >= 0.";
-=======
-  // price REQUIRED
-  if (name === "pricePerKg") {
-    if (isEmpty(v)) return "Βάλε τιμή (€ / kg).";
-    const n = Number(v);
-    if (Number.isNaN(n)) return "Η τιμή πρέπει να είναι αριθμός.";
-    if (n <= 0) return "Η τιμή πρέπει να είναι > 0.";
->>>>>>> 4177bcefb36228fae100910354ebc6806f0c1f2b
     if (n > 1000) return "Η τιμή φαίνεται υπερβολικά μεγάλη. Έλεγξέ την.";
   }
 
